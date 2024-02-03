@@ -9,15 +9,11 @@
 
 #include <stdint.h>
 
-// Input pins on P
-#define SONAR_TRIG_A0PIN 0b00000001
-#define SONAR_ECHO_A1PIN 0b00000010
-
 // Output pins on D
-#define T03_D1PIN 0b00000010 // Forward left tire
-#define T12_D2PIN 0b00000100 // Reverse left tire
-#define T47_D3PIN 0b00001000 // Forward right tire
-#define T56_D4PIN 0b00010000 // Reverse right tire
+#define T03_D_PIN 1 // Forward left tire
+#define T12_D_PIN 2 // Reverse left tire
+#define T47_D_PIN 3 // Forward right tire
+#define T56_D_PIN 4 // Reverse right tire
 
 
 
@@ -32,7 +28,6 @@ typedef enum {
 } spindirection_t;
 
 typedef enum {
-    Evading,
     PathClear,
     PathObstructed
 } status_t;
@@ -61,11 +56,10 @@ void stop_car();
 /*
  * Function:  evade 
  * --------------------
- * attempts to move car away from any obstructions to its path.
- *  
- * returns: if the car manages to find a new path 1 is returned, if not 0 is returned.
+ * Attempts to move car away from any obstructions to its path. Function will
+ * only return once objects are no longer detected.
  */
-int evade();
+void evade();
 
 /*
  * Function:  move 

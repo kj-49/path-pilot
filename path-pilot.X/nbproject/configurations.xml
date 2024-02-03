@@ -17,8 +17,8 @@
       <itemPath>avr-common.h</itemPath>
       <itemPath>movement.c</itemPath>
       <itemPath>movement.h</itemPath>
-      <itemPath>sonic.c</itemPath>
-      <itemPath>sonic.h</itemPath>
+      <itemPath>sensors.h</itemPath>
+      <itemPath>sensors.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

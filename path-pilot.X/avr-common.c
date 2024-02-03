@@ -8,20 +8,20 @@
 #include "avr-common.h"
 #include <avr/io.h>
 
-int compare_pin_input_value(uint8_t pin, port_t port, int value) {  
+int compare_pin_input_value(int pin, port_t port, int value) {  
     switch(port) {
         case A:
             if(value) { // check for 1 in port
-                return PORTA.IN & pin;
+                return PORTA.IN & (1 << pin);
             } else { // compare for 0 in port
-                return ~PORTA.IN & pin;
+                return ~PORTA.IN & (1 << pin);
             }
             break;
         case D:
             if(value) { // check for 1 in port
-                return PORTD.IN & pin;
+                return PORTD.IN & (1 << pin);
             } else { // compare for 0 in port
-                return ~PORTD.IN & pin;
+                return ~PORTD.IN & (1 << pin);
             }
             break;
         default:
@@ -29,20 +29,20 @@ int compare_pin_input_value(uint8_t pin, port_t port, int value) {
     }
 }
 
-void change_pin_output_value(uint8_t pin, port_t port, int value) {
+void set_pin_output_value(int pin, port_t port, int value) {
     switch(port) {
         case A:
             if(value) {
-                PORTA.OUT |= pin;
+                PORTA.OUT |= (1 << pin);
             } else {
-                PORTA.OUT &= ~pin;
+                PORTA.OUT &= ~(1 << pin);
             }
             break;
         case D:
             if(value) {
-                PORTD.OUT |= pin;
+                PORTD.OUT |= (1 << pin);
             } else {
-                PORTD.OUT &= ~pin;
+                PORTD.OUT &= ~(1 << pin);
             }
             break;
     }

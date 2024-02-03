@@ -8,15 +8,13 @@
 #ifndef AVR_COMMON_H
 #define	AVR_COMMON_H
 
-#include <stdint.h>
-
 typedef enum {
     A,
     D
 } port_t;
 
 /*
- * Function:  change_pin_output_value 
+ * Function:  set_pin_output_value 
  * --------------------
  * changes state of a single pin to value
  * 
@@ -25,7 +23,7 @@ typedef enum {
  * value: the value to change single pin, (1 or 0)
  * 
  */
-void change_pin_output_value(uint8_t pin, port_t port, int value);
+void set_pin_output_value(int pin, port_t port, int value);
 
 /*
  * Function:  compare_pin_input_value 
@@ -38,7 +36,7 @@ void change_pin_output_value(uint8_t pin, port_t port, int value);
  * 
  * returns: returns -1 if an error has occurred, 1 if the pin state is the same as value, 0 otherwise.
  */
-int compare_pin_input_value(uint8_t pin, port_t port, int value);
+int compare_pin_input_value(int pin, port_t port, int value);
 
 
 

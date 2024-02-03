@@ -7,6 +7,7 @@
 
 #include "movement.h"
 #include "avr-common.h"
+#include "sensors.h"
 #include <avr/io.h>
 
 void left_wheel_set(direction_t dir);
@@ -19,21 +20,19 @@ int obstruction() {
 void stop_car() {
     
     // Set all transistor pins to zero.
-    PORTD.OUT &= ~(T03_D1PIN | T12_D2PIN | T47_D3PIN | T56_D4PIN);
+    PORTD.OUT &= ~(T03_D_PIN | T12_D_PIN | T47_D_PIN | T56_D_PIN);
     
 }
-int evade() {
-    
+
+void evade() {
     stop_car();
     rotate_indefinite(Clockwise);
     
     while (obstruction()) {
-        // Wait
+        // Wait for a clear path to be found
     }
     
     move(Forward);
-    return 1;
-    
 }
 
 void move(direction_t dir) {
@@ -45,13 +44,13 @@ void left_wheel_set(direction_t dir) {
     switch(dir) {
         case Forward:
             // Never want all transistors on at once, so turn off first.
-            change_pin_output_value(T12_D2PIN, D, 0);
-            change_pin_output_value(T03_D1PIN, D, 1);
+            set_pin_output_value(T12_D_PIN, D, 0);
+            set_pin_output_value(T03_D_PIN, D, 1);
             break;
         case Reverse:
             // Never want all transistors on at once, so turn off first.
-            change_pin_output_value(T03_D1PIN, D, 0);
-            change_pin_output_value(T12_D2PIN, D, 1);
+            set_pin_output_value(T03_D_PIN, D, 0);
+            set_pin_output_value(T12_D_PIN, D, 1);
     }
 }
 
@@ -59,13 +58,13 @@ void right_wheel_set(direction_t dir) {
     switch(dir) {
         case Forward:
             // Never want all transistors on at once, so turn off first.
-            change_pin_output_value(T56_D4PIN, D, 0);
-            change_pin_output_value(T47_D3PIN, D, 1);
+            set_pin_output_value(T56_D_PIN, D, 0);
+            set_pin_output_value(T47_D_PIN, D, 1);
             break;
         case Reverse:
             // Never want all transistors on at once, so turn off first.
-            change_pin_output_value(T47_D3PIN, D, 0);
-            change_pin_output_value(T56_D4PIN, D, 1);
+            set_pin_output_value(T47_D_PIN, D, 0);
+            set_pin_output_value(T56_D_PIN, D, 1);
     }
 }
 
@@ -86,14 +85,12 @@ void rotate_indefinite(spindirection_t dir) {
     }
 }
 void indicate_status(status_t status) {
-    
     switch (status) {
-        case Evading:
-            break;
         case PathClear:
+            set_led(Green);
             break;
         case PathObstructed:
+            set_led(Red);
             break;
     }
-    
 }
