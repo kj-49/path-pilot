@@ -78,7 +78,7 @@ void rotate(spindirection_t dir, float radians){
 }
 
 void rotate_indefinite(spindirection_t dir) {
-    switch (dir){
+    switch (dir) {
         case Clockwise:
             left_wheel_set(Forward);
             right_wheel_set(Reverse);

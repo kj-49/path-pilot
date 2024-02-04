@@ -15,11 +15,11 @@
 
 // Prototypes
 void configure_pins();
+void boot_car();
 
-int main(void) {
-    configure_pins();
+int main(void) { 
+    boot_car();
     move(Forward);
-    
     while (1) {
         // Check sonar reading
         if (obstruction()) {
@@ -45,6 +45,14 @@ void configure_pins() {
         (1 << LED_GREEN_D_OUT_PIN);
     
     PORTA.DIRSET = (1 << SONAR_TRIG_A_OUT_PIN);
+    
+}
+
+void boot_car() {
+    configure_pins();
+    
+    // Flash LED to indicate restart
+    flicker_led(Green);
     
     
 }

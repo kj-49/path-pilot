@@ -82,6 +82,39 @@ void set_led(color_t color) {
     }
 }
 
+void flicker_led(color_t color) {
+    switch (color) {
+        case Red:
+            set_pin_output_value(LED_RED_D_OUT_PIN, A, 1);
+            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 0);
+            _delay_ms(250);
+            set_pin_output_value(LED_RED_D_OUT_PIN, A, 0);
+            _delay_ms(250);
+            set_pin_output_value(LED_RED_D_OUT_PIN, A, 1);
+            _delay_ms(250);
+            set_pin_output_value(LED_RED_D_OUT_PIN, A, 0);
+            _delay_ms(250);
+            set_pin_output_value(LED_RED_D_OUT_PIN, A, 1);
+            break;
+        case Green:
+            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 1);
+            set_pin_output_value(LED_RED_D_OUT_PIN, A, 0);
+            _delay_ms(250);
+            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 0);
+            _delay_ms(250);
+            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 1);
+            _delay_ms(250);
+            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 0);
+            _delay_ms(250);
+            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 1);
+            break;
+        case None:
+            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 0);
+            set_pin_output_value(LED_RED_D_OUT_PIN, A, 0);
+            break;
+    }
+}
+
 uint16_t us_sound_to_centimeters(uint16_t us) {
     volatile uint16_t distance_cen = (us * 0.0343);
     return distance_cen;
