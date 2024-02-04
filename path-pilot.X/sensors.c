@@ -11,9 +11,10 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+uint16_t us_sound_to_centimeters(uint16_t us);
+
 double get_distance() {
-        
-    double distance = 0;
+       
    
     /*
      * Note: By default, CLKCTRL.MCLKCTRLA is set to 0x00.
@@ -37,7 +38,8 @@ double get_distance() {
     
         
     CCP = 0xd8;
-    CLKCTRL.OSCHFCTRLA = 0b00010100;
+    // 1MHz for clock
+    CLKCTRL.OSCHFCTRLA = 0b00000000;
     // Set to max value as we will check manually
     TCA0.SINGLE.PER = 0xffff;
     while (CLKCTRL.MCLKSTATUS & 0b00000001) {
@@ -46,7 +48,7 @@ double get_distance() {
     
     // send pulse
     set_pin_output_value(SONAR_TRIG_A_PIN, A, 1);
-    
+
     // delay
     _delay_us(10);
     
@@ -54,23 +56,20 @@ double get_distance() {
     
     // wait for echo
     while(compare_pin_input_value(SONAR_ECHO_A_PIN, A, 0));
-    
-    // Start timer
+    // start timer
     TCA0.SINGLE.CTRLA = 0b000000001;
     
-    // start timer
-    int test = 0;
-    
     // wait for signal to end
-    
     while(compare_pin_input_value(SONAR_ECHO_A_PIN, A, 1));
     
+    // capture timer count (clock cycles = microseconds)
+    volatile uint16_t micros = TCA0.SINGLE.CNT;
     // turn timer off
-    
+    TCA0.SINGLE.CTRLA = 0b000000000;
     // calculate distance
+    volatile uint16_t distance = us_sound_to_centimeters(micros/2);
     
-    // return value
-    
+    return distance;
 }
 
 void set_led(color_t color) {
@@ -90,6 +89,8 @@ void set_led(color_t color) {
     }
 }
 
-uint16_t ms_of_sound_to_micrometers(uint16_t seconds) {
-    return (seconds * 343);
+uint16_t us_sound_to_centimeters(uint16_t us) {
+    volatile uint16_t distance_mil = (us * 0.0343);
+
+    return distance_mil;
 }

@@ -25,11 +25,11 @@
 #define SONAR_TRIG_A_PIN 0
 #define SONAR_ECHO_A_PIN 1
 #define PIN2_A_PIN 2
-#define PIN2_A_PIN 3
-#define PIN2_A_PIN 4
-#define PIN2_A_PIN 5
-#define PIN2_A_PIN 6
-#define PIN2_A_PIN 7
+#define PIN3_A_PIN 3
+#define PIN4_A_PIN 4
+#define PIN5_A_PIN 5
+#define PIN6_A_PIN 6
+#define PIN7_A_PIN 7
 
 typedef enum {
     A,
