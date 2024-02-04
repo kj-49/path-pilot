@@ -10,16 +10,22 @@
 #include "sensors.h"
 #include <avr/io.h>
 
+// When to count obstruction in cm.
+#define DISTANCE_THRESHOLD 20
+
 void left_wheel_set(direction_t dir);
 void right_wheel_set(direction_t dir);
 
 int obstruction() {
+    if (get_distance() <= DISTANCE_THRESHOLD) {
+        return 1;
+    }
     return 0;
 }
 
 void stop_car() {
     // Set all transistor pins to zero.
-    PORTD.OUT &= ~(T03_D_PIN | T12_D_PIN | T47_D_PIN | T56_D_PIN);  
+    PORTD.OUT &= ~(T03_D_OUT_PIN | T12_D_OUT_PIN | T47_D_OUT_PIN | T56_D_OUT_PIN);  
 }
 
 void evade() {
@@ -29,6 +35,7 @@ void evade() {
     while (obstruction()) {
         // Wait for a clear path to be found
     }
+    stop_car();
     
     move(Forward);
 }
@@ -39,30 +46,30 @@ void move(direction_t dir) {
 }
 
 void left_wheel_set(direction_t dir) {
-    switch(dir) {
+    switch (dir) {
         case Forward:
             // Never want all transistors on at once, so turn off first.
-            set_pin_output_value(T12_D_PIN, D, 0);
-            set_pin_output_value(T03_D_PIN, D, 1);
+            set_pin_output_value(T12_D_OUT_PIN, D, 0);
+            set_pin_output_value(T03_D_OUT_PIN, D, 1);
             break;
         case Reverse:
             // Never want all transistors on at once, so turn off first.
-            set_pin_output_value(T03_D_PIN, D, 0);
-            set_pin_output_value(T12_D_PIN, D, 1);
+            set_pin_output_value(T03_D_OUT_PIN, D, 0);
+            set_pin_output_value(T12_D_OUT_PIN, D, 1);
     }
 }
 
 void right_wheel_set(direction_t dir) {
-    switch(dir) {
+    switch (dir) {
         case Forward:
             // Never want all transistors on at once, so turn off first.
-            set_pin_output_value(T56_D_PIN, D, 0);
-            set_pin_output_value(T47_D_PIN, D, 1);
+            set_pin_output_value(T56_D_OUT_PIN, D, 0);
+            set_pin_output_value(T47_D_OUT_PIN, D, 1);
             break;
         case Reverse:
             // Never want all transistors on at once, so turn off first.
-            set_pin_output_value(T47_D_PIN, D, 0);
-            set_pin_output_value(T56_D_PIN, D, 1);
+            set_pin_output_value(T47_D_OUT_PIN, D, 0);
+            set_pin_output_value(T56_D_OUT_PIN, D, 1);
     }
 }
 
