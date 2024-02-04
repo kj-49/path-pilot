@@ -18,10 +18,8 @@ int obstruction() {
 }
 
 void stop_car() {
-    
     // Set all transistor pins to zero.
-    PORTD.OUT &= ~(T03_D_PIN | T12_D_PIN | T47_D_PIN | T56_D_PIN);
-    
+    PORTD.OUT &= ~(T03_D_PIN | T12_D_PIN | T47_D_PIN | T56_D_PIN);  
 }
 
 void evade() {

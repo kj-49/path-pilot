@@ -8,6 +8,29 @@
 #ifndef AVR_COMMON_H
 #define	AVR_COMMON_H
 
+// Available AVR pins
+
+// Output pins on D
+#define PIN0_D_PIN 0 // Ground
+#define T03_D_PIN 1 // Forward left tire
+#define T12_D_PIN 2 // Reverse left tire
+#define T47_D_PIN 3 // Forward right tire
+#define T56_D_PIN 4 // Reverse right tire
+// LED pins
+#define LED_RED_D_PIN 5
+#define LED_GREEN_D_PIN 6
+#define PIN7_D_PIN 7
+
+// Input pins on A
+#define SONAR_TRIG_A_PIN 0
+#define SONAR_ECHO_A_PIN 1
+#define PIN2_A_PIN 2
+#define PIN2_A_PIN 3
+#define PIN2_A_PIN 4
+#define PIN2_A_PIN 5
+#define PIN2_A_PIN 6
+#define PIN2_A_PIN 7
+
 typedef enum {
     A,
     D

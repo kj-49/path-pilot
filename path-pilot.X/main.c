@@ -8,17 +8,20 @@
 
 #include "movement.h"
 #include "sensors.h"
+#include "avr-common.h"
 
 #include <avr/io.h>
-
+#include <avr/interrupt.h>
 
 // Prototypes
 void configure_pins();
 
 int main(void) {
-    
     configure_pins();
-    move(Forward);
+    //move(Forward);
+    
+    // Testing
+    double dist = get_distance();
     
     while (1) {
         // Check sonar reading
@@ -32,6 +35,7 @@ int main(void) {
 }
 
 void configure_pins() {
+    
     // Configure input pins
     PORTA.DIRCLR = (1 << SONAR_ECHO_A_PIN);
     
@@ -41,6 +45,9 @@ void configure_pins() {
         (1 << T47_D_PIN) | 
         (1 << T56_D_PIN) |
         (1 << LED_RED_D_PIN) |
-        (1 << LED_GREEN_D_PIN) |
-        (1 << SONAR_TRIG_A_PIN);
+        (1 << LED_GREEN_D_PIN);
+    
+    PORTA.DIRSET = (1 << SONAR_TRIG_A_PIN);
+    
+    
 }

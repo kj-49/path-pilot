@@ -9,11 +9,7 @@
 
 #include <stdint.h>
 
-// Output pins on D
-#define T03_D_PIN 1 // Forward left tire
-#define T12_D_PIN 2 // Reverse left tire
-#define T47_D_PIN 3 // Forward right tire
-#define T56_D_PIN 4 // Reverse right tire
+
 
 
 
