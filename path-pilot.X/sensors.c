@@ -18,23 +18,20 @@ double get_distance() {
    
     /*
      * Note: By default, CLKCTRL.MCLKCTRLA is set to 0x00.
-     * This means the by default, OSCHF clock is used for main clock.
-     * By default, CLKCTRL.OSCHFCTRLA is set to 4MHz
+     * This means that by default, OSCHF clock is used for main clock.
      * 
-     * Since we are using a 4MHz clock, we will set divider to DIV4.
+     * Since we are using a 1MHz clock, we will set no divider and simply use the main clock.
      * Therefore, our TCA0.SINGLE.CNT value with be the amount of clock cycles
      * for a clock set to 1MHz. For example, TCA0.SINGLE.CNT should be 1 million after 1 second.
      * 
-     * IMPORTANT: We our division is gives us enough time to execute our timer. If our timer goes past
+     * IMPORTANT: We shoukd make sure our division is gives us enough time to execute our timer. If our timer goes past
      * TCA0.SINGLE.PER it will reset to 0x00.
      * 
      * Given our current parameters, we can effectively use the timer for timing from 0 seconds to 0.065535 seconds.
      * This should be good for ultrasonic sensor readings.
      * 
      * NOTE: Since our clock is 1Mhz, our TCA0.SINGLE.CNT will give us the clock cycles, but also the Microseconds, as they are equal in this scenario.
-     */ 
-    
-    // FIX!!
+     */
     
         
     CCP = 0xd8;
@@ -90,7 +87,7 @@ void set_led(color_t color) {
 }
 
 uint16_t us_sound_to_centimeters(uint16_t us) {
-    volatile uint16_t distance_mil = (us * 0.0343);
+    volatile uint16_t distance_cen = (us * 0.0343);
 
-    return distance_mil;
+    return distance_cen;
 }
