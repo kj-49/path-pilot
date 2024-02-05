@@ -1,6 +1,6 @@
 /*
  * File:   main.c
- * Author: ksjam
+ * Author: Kyle James
  *
  * Created on February 2, 2024, 4:07 PM
  */
@@ -9,6 +9,7 @@
 #include "movement.h"
 #include "sensors.h"
 #include "avr-common.h"
+#include "communication.h"
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -18,6 +19,7 @@ void configure_pins();
 void boot_car();
 
 int main(void) { 
+    
     boot_car();
     move(Forward);
     while (1) {
@@ -51,8 +53,9 @@ void configure_pins() {
 void boot_car() {
     configure_pins();
     
+    // Initialize USART
+    usart_init();
+    
     // Flash LED to indicate restart
     flicker_led(Green);
-    
-    
 }

@@ -1,9 +1,34 @@
 /*
  * File:   movement.c
- * Author: ksj
+ * Author: Kyle James
  *
  * Created on January 21, 2024, 12:13 AM
  */
+
+
+
+/* 
+ * This code to reliant on an H-Bridge circuit to control the direction of a our dc motors.
+             VCC
+             |
+  -----------|-----------
+  |                      |
+  |                      |
+Transistor 0            Transistor 1
+  |                      |
+  |                      |
+  ------ + MOTOR - -------
+  |                      |
+  |                      |
+Transistor 2            Transistor 3
+  |                      |
+  |                      |
+  -----------|-----------
+             |
+          Ground
+
+ */
+
 
 #include "movement.h"
 #include "avr-common.h"

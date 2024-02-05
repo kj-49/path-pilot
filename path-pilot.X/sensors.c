@@ -1,7 +1,7 @@
 
 /*
  * File:   sensors.c
- * Author: ksj
+ * Author: Kyle James
  *
  * Created on January 24, 2024, 12:13 AM
  */
@@ -87,26 +87,22 @@ void flicker_led(color_t color) {
         case Red:
             set_pin_output_value(LED_RED_D_OUT_PIN, A, 1);
             set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 0);
-            _delay_ms(250);
-            set_pin_output_value(LED_RED_D_OUT_PIN, A, 0);
-            _delay_ms(250);
-            set_pin_output_value(LED_RED_D_OUT_PIN, A, 1);
-            _delay_ms(250);
-            set_pin_output_value(LED_RED_D_OUT_PIN, A, 0);
-            _delay_ms(250);
-            set_pin_output_value(LED_RED_D_OUT_PIN, A, 1);
+            for (int i = 0; i < 3; i++) {
+                _delay_ms(250);
+                set_pin_output_value(LED_RED_D_OUT_PIN, A, 0);
+                _delay_ms(250);
+                set_pin_output_value(LED_RED_D_OUT_PIN, A, 1);
+            }
             break;
         case Green:
             set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 1);
             set_pin_output_value(LED_RED_D_OUT_PIN, A, 0);
-            _delay_ms(250);
-            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 0);
-            _delay_ms(250);
-            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 1);
-            _delay_ms(250);
-            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 0);
-            _delay_ms(250);
-            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 1);
+            for (int i = 0; i < 3; i++) {
+                _delay_ms(250);
+                set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 0);
+                _delay_ms(250);
+                set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 1);
+            }
             break;
         case None:
             set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 0);

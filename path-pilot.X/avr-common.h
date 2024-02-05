@@ -1,6 +1,6 @@
 /* 
  * File:   avr-common.h
- * Author: ksjam
+ * Author: Kyle James
  *
  * Created on January 24, 2024, 12:09 PM
  */
@@ -12,23 +12,23 @@
 
 // D pins
 #define PIN0_D_PIN 0 // Ground
-#define T03_D_OUT_PIN 1 // Forward left tire
-#define T12_D_OUT_PIN 2 // Reverse left tire
-#define T47_D_OUT_PIN 3 // Forward right tire
-#define T56_D_OUT_PIN 4 // Reverse right tire
+#define T03_D_OUT_PIN 1 // Forward left tire (transistor 0 and 3 active)
+#define T12_D_OUT_PIN 2 // Reverse left tire (transistor 1 and 2 active)
+#define T47_D_OUT_PIN 3 // Forward right tire (transistor 4 and 7 active)
+#define T56_D_OUT_PIN 4 // Reverse right tire (transistor 5 and 6 active)
 #define LED_RED_D_OUT_PIN 5 // Red LED
 #define LED_GREEN_D_OUT_PIN 6 // Green LED
-#define PIN7_D_PIN 7
+#define USART_D_OUT_PIN 7 // Usart transmission
 
 // A pins
 #define SONAR_TRIG_A_OUT_PIN 0 // Sonar pulse
-#define SONAR_ECHO_A_IN_PIN 1
+#define SONAR_ECHO_A_IN_PIN 1 // Sonar echo
 #define PIN2_A_PIN 2
 #define PIN3_A_PIN 3
 #define PIN4_A_PIN 4
 #define PIN5_A_PIN 5
 #define PIN6_A_PIN 6
-#define PIN7_A_PIN 7
+#define PIN7_A_PIN 7 // Usart 
 
 typedef enum {
     A,

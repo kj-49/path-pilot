@@ -1,6 +1,6 @@
 /* 
  * File:   sensors.h
- * Author: ksjam
+ * Author: Kyle James
  *
  * Created on January 24, 2024, 4:34 PM
  */
