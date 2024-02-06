@@ -36,7 +36,7 @@ Transistor 2            Transistor 3
 #include <avr/io.h>
 
 // When to count obstruction in cm.
-#define DISTANCE_THRESHOLD 20
+#define DISTANCE_THRESHOLD 10
 
 void left_wheel_set(direction_t dir);
 void right_wheel_set(direction_t dir);

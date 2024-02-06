@@ -28,7 +28,7 @@
 #define PIN4_A_PIN 4
 #define PIN5_A_PIN 5
 #define PIN6_A_PIN 6
-#define PIN7_A_PIN 7 // Usart 
+#define USART_D_IN_PIN 7 // Usart reception
 
 typedef enum {
     A,
