@@ -41,9 +41,6 @@ uint16_t get_distance() {
         ;
     }
     
-    // Testing
-    _delay_ms(1000);
-    
     // send pulse
     set_pin_output_value(SONAR_TRIG_A_OUT_PIN, A, 1);
     // delay
