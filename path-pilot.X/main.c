@@ -22,6 +22,8 @@ void boot_car();
 int main(void) { 
     boot_car();
     
+    //usart_send_char('A');
+    
     move(Forward);
     indicate_status(PathClear);
     
@@ -57,7 +59,7 @@ void boot_car() {
     configure_pins();
     
     // Initialize USART
-    //usart_init();
+    usart_init();
     
     // Flash LED to indicate restart
     flicker_led(Green);

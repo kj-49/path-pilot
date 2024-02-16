@@ -215,7 +215,7 @@
         <property key="usart0io.output" value="window"/>
         <property key="usart0io.outputfile" value=""/>
         <property key="usart0io.uartioenabled" value="false"/>
-        <property key="usart1io.output" value="file"/>
+        <property key="usart1io.output" value="window"/>
         <property key="usart1io.outputfile" value="USARTLogs"/>
         <property key="usart1io.uartioenabled" value="true"/>
         <property key="usart2io.output" value="window"/>
@@ -731,7 +731,7 @@
         <property key="usart0io.output" value="window"/>
         <property key="usart0io.outputfile" value=""/>
         <property key="usart0io.uartioenabled" value="false"/>
-        <property key="usart1io.output" value="file"/>
+        <property key="usart1io.output" value="window"/>
         <property key="usart1io.outputfile" value="USARTLogs"/>
         <property key="usart1io.uartioenabled" value="true"/>
         <property key="usart2io.output" value="window"/>
