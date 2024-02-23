@@ -11,6 +11,10 @@
 #include "communication.h"
 #include "avr-common.h"
 
+
+#define BAUD_RATE_CALC(BAUD_RATE) ((float)(64 * 1000000 / (16 * (float)BAUD_RATE)) + 0.5)
+
+
 void usart_init() {
     // Set PIND7 to output
     PORTD.DIRSET |= (1 << USART_D_OUT_PIN) | (1 << USART_D_IN_PIN);
@@ -18,6 +22,7 @@ void usart_init() {
     USART1.BAUD = (uint16_t)(9600);
     
     // Set the mode to synchronous and data format to 8-bit
+    USART1.CTRLC = 0b10000011;
     USART1.CTRLC = 0b10000011;
     
     // Enable transmission

@@ -5,8 +5,8 @@
  * Created on January 24, 2024, 4:34 PM
  */
 
-#ifndef SONIC_H
-#define	SONIC_H
+#ifndef SENSORS_H
+#define	SENSORS_H
 
 #include <avr/io.h>
 
@@ -23,5 +23,5 @@ void set_led(color_t color);
 void flicker_led(color_t color);
 
 
-#endif	/* SONIC_H */
+#endif	/* SENSORS_H */
 
