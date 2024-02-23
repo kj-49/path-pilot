@@ -33,6 +33,7 @@ Transistor 2            Transistor 3
 #include "movement.h"
 #include "avr-common.h"
 #include "sensors.h"
+#include "communication.h"
 #include <avr/io.h>
 
 // When to count obstruction in cm.

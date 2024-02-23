@@ -30,3 +30,6 @@ funclist
 nbproject/Makefile-*
 disassembly/
 .generated_files/
+
+# Custom files for path-pilot
+/path-pilot.X/USARTLogs

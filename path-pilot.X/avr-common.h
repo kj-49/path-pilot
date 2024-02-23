@@ -30,6 +30,8 @@
 #define PIN6_A_PIN 6
 #define USART_D_IN_PIN 7 // Usart reception
 
+#define DEBUGGING 1
+
 typedef enum {
     A,
     D
