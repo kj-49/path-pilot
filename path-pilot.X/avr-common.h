@@ -12,12 +12,12 @@
 
 // D pins
 #define PIN0_D_PIN 0 // Ground
-#define T03_D_OUT_PIN 1 // Forward left tire (transistor 0 and 3 active)
-#define T12_D_OUT_PIN 2 // Reverse left tire (transistor 1 and 2 active)
-#define T47_D_OUT_PIN 3 // Forward right tire (transistor 4 and 7 active)
-#define T56_D_OUT_PIN 4 // Reverse right tire (transistor 5 and 6 active)
-#define LED_RED_D_OUT_PIN 5 // Red LED
-#define LED_GREEN_D_OUT_PIN 6 // Green LED
+#define LEN_D_OUT_PIN 1 // Left motor enable
+#define REN_D_OUT_PIN 2 // Right motor enable
+#define LFOR_D_OUT_PIN 3 // Left motor foward
+#define LBACK_D_OUT_PIN 4 // Left motor backward
+#define RFOR_RED_D_OUT_PIN 5 // Right motor foward
+#define RBACK_GREEN_D_OUT_PIN 6 // Right motor backward
 #define USART_D_OUT_PIN 7 // Usart transmission
 
 // A pins

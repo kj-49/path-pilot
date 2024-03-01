@@ -34,6 +34,7 @@ int main(void) {
     while (1) {
         // Check sonar reading
         if (obstruction()) {
+            //u_println("Obstruction detected.");
             // Only set LED for initial reading of obstruction
             indicate_status(PathObstructed);
             evade();
