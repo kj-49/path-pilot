@@ -49,12 +49,12 @@ void configure_pins() {
     PORTA.DIRCLR = (1 << SONAR_ECHO_A_IN_PIN);
     
     // Configure output pins
-    PORTD.DIRSET = (1 << T03_D_OUT_PIN) | 
-        (1 << T12_D_OUT_PIN) | 
-        (1 << T47_D_OUT_PIN) | 
-        (1 << T56_D_OUT_PIN) |
-        (1 << LED_RED_D_OUT_PIN) |
-        (1 << LED_GREEN_D_OUT_PIN);
+    PORTD.DIRSET = (1 << LEN_A_OUT_PIN) | 
+        (1 << REN_A_OUT_PIN) | 
+        (1 << LFOR_A_OUT_PIN) | 
+        (1 << LBACK_A_OUT_PIN) |
+        (1 << RFOR_A_OUT_PIN) |
+        (1 << RBACK_A_OUT_PIN);
     
     PORTA.DIRSET = (1 << SONAR_TRIG_A_OUT_PIN);
     

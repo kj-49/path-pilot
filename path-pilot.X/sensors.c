@@ -73,16 +73,16 @@ uint16_t get_distance() {
 void set_led(color_t color) {
     switch (color) {
         case Red:
-            set_pin_output_value(LED_RED_D_OUT_PIN, D, 1);
-            set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 0);
+            set_pin_output_value(LED_RED_D_OUT_PIN, A, 1);
+            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 0);
             break;
         case Green:
-            set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 1);
-            set_pin_output_value(LED_RED_D_OUT_PIN, D, 0);
+            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 1);
+            set_pin_output_value(LED_RED_D_OUT_PIN, A, 0);
             break;
         case None:
-            set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 0);
-            set_pin_output_value(LED_RED_D_OUT_PIN, D, 0);
+            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 0);
+            set_pin_output_value(LED_RED_D_OUT_PIN, A, 0);
             break;
     }
 }
@@ -119,4 +119,36 @@ void flicker_led(color_t color) {
 uint16_t us_sound_to_centimeters(uint16_t us) {
     volatile uint16_t distance_cen = (us * 0.0343);
     return distance_cen;
+}
+
+void set_left_pwm() {
+    
+    // Set output pins MUX
+    PORTMUX.TCBROUTEA = (0 << 0) | // TCB0 PWM on PA2
+            (0 << 1); // TCB1 PWN on PA3
+    
+    TCB0.CTRLA = (1 << 0); // Enable timer, use DIV1 for CLK 
+    
+    TCB0.CCMPL = (0xff);  // Set wave period
+    TCB0.CCMPH = (0x80);  // 50% duty cycle
+            
+    TCB0.CTRLB = (1 << 4) | // Make output available on MUXed pin
+            (0x7); // Use 8-bit PWM mode
+    
+}
+
+void set_right_pwm() {
+    
+    // Set output pins MUX
+    PORTMUX.TCBROUTEA = (0 << 0) | // TCB0 PWM on PA2
+            (0 << 1); // TCB1 PWN on PA3
+    
+    TCB1.CTRLA = (1 << 0); // Enable timer, use DIV1 for CLK 
+    
+    TCB1.CCMPL = (0xff);  // Set wave period
+    TCB1.CCMPH = (0x80);  // 50% duty cycle
+            
+    TCB1.CTRLB = (1 << 4) | // Make output available on MUXed pin
+            (0x7); // Use 8-bit PWM mode
+    
 }

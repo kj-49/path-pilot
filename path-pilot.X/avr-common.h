@@ -12,23 +12,23 @@
 
 // D pins
 #define PIN0_D_PIN 0 // Ground
-#define LEN_D_OUT_PIN 1 // Left motor enable
-#define REN_D_OUT_PIN 2 // Right motor enable
-#define LFOR_D_OUT_PIN 3 // Left motor foward
-#define LBACK_D_OUT_PIN 4 // Left motor backward
-#define RFOR_RED_D_OUT_PIN 5 // Right motor foward
-#define RBACK_GREEN_D_OUT_PIN 6 // Right motor backward
+#define LED_GREEN_D_OUT_PIN 1 
+#define LED_RED_D_OUT_PIN 2 
+#define D_PIN3 3
+#define D_PIN4 4 
+#define D_PIN5 5 
+#define USART_D_IN_PIN 6 
 #define USART_D_OUT_PIN 7 // Usart transmission
 
 // A pins
 #define SONAR_TRIG_A_OUT_PIN 0 // Sonar pulse
 #define SONAR_ECHO_A_IN_PIN 1 // Sonar echo
-#define PIN2_A_PIN 2
-#define PIN3_A_PIN 3
-#define PIN4_A_PIN 4
-#define PIN5_A_PIN 5
-#define PIN6_A_PIN 6
-#define USART_D_IN_PIN 7 // Usart reception
+#define LEN_A_OUT_PIN 2 // Left motor enable (PWM)
+#define REN_A_OUT_PIN 3 // Right motor enable (PWM)
+#define LFOR_A_OUT_PIN 4 // Left motor foward
+#define LBACK_A_OUT_PIN 5 // Left motor backward
+#define RFOR_A_OUT_PIN 6 // Right motor foward
+#define RBACK_A_OUT_PIN 7 // Right motor backward
 
 #define DEBUGGING 1
 

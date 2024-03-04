@@ -51,12 +51,12 @@ int obstruction() {
 
 void stop_car() {
     // Set all transistor pins to zero.
-    PORTD.OUT &= ~(T03_D_OUT_PIN | T12_D_OUT_PIN | T47_D_OUT_PIN | T56_D_OUT_PIN);  
+    //PORTD.OUT &= ~(LFOR_A_OUT_PIN | LBACK_A_OUT_PIN | RFOR_A_OUT_PIN | RBACK_A_OUT_PIN);  
 }
 
 void evade() {
     stop_car();
-    rotate_indefinite(Clockwise);
+    rotate_indefinite(CounterClockwise);
     
     while (obstruction()) {
         // Wait for a clear path to be found
@@ -75,13 +75,13 @@ void left_wheel_set(direction_t dir) {
     switch (dir) {
         case Forward:
             // Never want all transistors on at once, so turn off first.
-            set_pin_output_value(T12_D_OUT_PIN, D, 0);
-            set_pin_output_value(T03_D_OUT_PIN, D, 1);
+            set_pin_output_value(LBACK_A_OUT_PIN, D, 0);
+            set_pin_output_value(LFOR_A_OUT_PIN, D, 1);
             break;
         case Reverse:
             // Never want all transistors on at once, so turn off first.
-            set_pin_output_value(T03_D_OUT_PIN, D, 0);
-            set_pin_output_value(T12_D_OUT_PIN, D, 1);
+            set_pin_output_value(LFOR_A_OUT_PIN, D, 0);
+            set_pin_output_value(LBACK_A_OUT_PIN, D, 1);
     }
 }
 
@@ -89,13 +89,13 @@ void right_wheel_set(direction_t dir) {
     switch (dir) {
         case Forward:
             // Never want all transistors on at once, so turn off first.
-            set_pin_output_value(T56_D_OUT_PIN, D, 0);
-            set_pin_output_value(T47_D_OUT_PIN, D, 1);
+            set_pin_output_value(RBACK_A_OUT_PIN, D, 0);
+            set_pin_output_value(RFOR_A_OUT_PIN, D, 1);
             break;
         case Reverse:
             // Never want all transistors on at once, so turn off first.
-            set_pin_output_value(T47_D_OUT_PIN, D, 0);
-            set_pin_output_value(T56_D_OUT_PIN, D, 1);
+            set_pin_output_value(RFOR_A_OUT_PIN, D, 0);
+            set_pin_output_value(RBACK_A_OUT_PIN, D, 1);
     }
 }
 
