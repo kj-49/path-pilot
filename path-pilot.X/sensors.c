@@ -121,34 +121,52 @@ uint16_t us_sound_to_centimeters(uint16_t us) {
     return distance_cen;
 }
 
-void set_left_pwm() {
+void set_pwm(int perc_duty_cycle, motor_choice_t choice) {
     
     // Set output pins MUX
     PORTMUX.TCBROUTEA = (0 << 0) | // TCB0 PWM on PA2
             (0 << 1); // TCB1 PWN on PA3
     
-    TCB0.CTRLA = (1 << 0); // Enable timer, use DIV1 for CLK 
+    // Period
+    uint8_t wave_per = F_CPU / (2 * PWM_FREQ) - 1;;
     
-    TCB0.CCMPL = (0xff);  // Set wave period
-    TCB0.CCMPH = (0x80);  // 50% duty cycle
-            
-    TCB0.CTRLB = (1 << 4) | // Make output available on MUXed pin
-            (0x7); // Use 8-bit PWM mode
+    uint8_t pulse_width = (uint8_t)((uint16_t)perc_duty_cycle * wave_per / 100);
     
-}
+    switch (choice) {
+        case Motor_Choice_Both:
+            TCB0.CTRLA = (1 << 0); // Enable timer, use DIV1 for CLK 
 
-void set_right_pwm() {
-    
-    // Set output pins MUX
-    PORTMUX.TCBROUTEA = (0 << 0) | // TCB0 PWM on PA2
-            (0 << 1); // TCB1 PWN on PA3
-    
-    TCB1.CTRLA = (1 << 0); // Enable timer, use DIV1 for CLK 
-    
-    TCB1.CCMPL = (0xff);  // Set wave period
-    TCB1.CCMPH = (0x80);  // 50% duty cycle
+            TCB0.CCMPL = wave_per;
+            TCB0.CCMPH = pulse_width;
+
+            TCB0.CTRLB = (1 << 4) | // Make output available on MUXed pin
+                    (0x7); // Use 8-bit PWM mode
             
-    TCB1.CTRLB = (1 << 4) | // Make output available on MUXed pin
-            (0x7); // Use 8-bit PWM mode
-    
+            TCB1.CTRLA = (1 << 0); // Enable timer, use DIV1 for CLK 
+
+            TCB1.CCMPL = wave_per;
+            TCB1.CCMPH = pulse_width;
+
+            TCB1.CTRLB = (1 << 4) | // Make output available on MUXed pin
+                (0x7); // Use 8-bit PWM mode
+            break;
+        case Motor_Choice_Left:
+            TCB0.CTRLA = (1 << 0); // Enable timer, use DIV1 for CLK 
+
+            TCB0.CCMPL = wave_per;
+            TCB0.CCMPH = pulse_width;
+
+            TCB0.CTRLB = (1 << 4) | // Make output available on MUXed pin
+                    (0x7); // Use 8-bit PWM mode
+            break;
+        case Motor_Choice_Right:
+            TCB1.CTRLA = (1 << 0); // Enable timer, use DIV1 for CLK 
+
+            TCB1.CCMPL = wave_per;
+            TCB1.CCMPH = pulse_width;
+
+            TCB1.CTRLB = (1 << 4) | // Make output available on MUXed pin
+                (0x7); // Use 8-bit PWM mode
+            break;
+    }
 }

@@ -9,6 +9,7 @@
 #define	SENSORS_H
 
 #include <avr/io.h>
+#include <avr/delay.h>
 
 typedef enum {
     Red,
@@ -21,6 +22,12 @@ uint16_t get_distance();
 void set_led(color_t color);
 
 void flicker_led(color_t color);
+
+typedef enum {
+    Motor_Choice_Left,
+    Motor_Choice_Right,
+    Motor_Choice_Both
+} motor_choice_t;
 
 
 #endif	/* SENSORS_H */

@@ -31,6 +31,7 @@
 #define RBACK_A_OUT_PIN 7 // Right motor backward
 
 #define DEBUGGING 1
+#define PWM_FREQ 2000
 
 typedef enum {
     A,
