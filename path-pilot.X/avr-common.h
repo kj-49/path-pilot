@@ -23,12 +23,12 @@
 // A pins
 #define SONAR_TRIG_A_OUT_PIN 0 // Sonar pulse
 #define SONAR_ECHO_A_IN_PIN 1 // Sonar echo
-#define LEN_A_OUT_PIN 2 // Left motor enable (PWM)
-#define REN_A_OUT_PIN 3 // Right motor enable (PWM)
-#define LFOR_A_OUT_PIN 4 // Left motor foward
-#define LBACK_A_OUT_PIN 5 // Left motor backward
-#define RFOR_A_OUT_PIN 6 // Right motor foward
-#define RBACK_A_OUT_PIN 7 // Right motor backward
+#define LEN_A_OUT_PIN 2 // Left motor enable (PWM) (Comes out of OUT1)
+#define REN_A_OUT_PIN 3 // Right motor enable (PWM) (Comes out of OUT4)
+#define LFOR_A_OUT_PIN 4 // Left motor foward (IN1)
+#define LBACK_A_OUT_PIN 5 // Left motor backward (IN2)
+#define RFOR_A_OUT_PIN 6 // Right motor foward (IN3)
+#define RBACK_A_OUT_PIN 7 // Right motor backward (IN4)
 
 #define DEBUGGING 1
 #define PWM_FREQ 2000

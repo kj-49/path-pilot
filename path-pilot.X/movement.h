@@ -33,6 +33,12 @@ typedef enum {
     Right
 } side_t;
 
+typedef enum {
+    Motor_Choice_Left,
+    Motor_Choice_Right,
+    Motor_Choice_Both
+} motor_choice_t;
+
 /*
  * Function:  obstruction 
  * --------------------

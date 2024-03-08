@@ -73,16 +73,16 @@ uint16_t get_distance() {
 void set_led(color_t color) {
     switch (color) {
         case Red:
-            set_pin_output_value(LED_RED_D_OUT_PIN, A, 1);
-            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 0);
+            set_pin_output_value(LED_RED_D_OUT_PIN, D, 1);
+            set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 0);
             break;
         case Green:
-            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 1);
-            set_pin_output_value(LED_RED_D_OUT_PIN, A, 0);
+            set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 1);
+            set_pin_output_value(LED_RED_D_OUT_PIN, D, 0);
             break;
         case None:
-            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 0);
-            set_pin_output_value(LED_RED_D_OUT_PIN, A, 0);
+            set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 0);
+            set_pin_output_value(LED_RED_D_OUT_PIN, D, 0);
             break;
     }
 }
@@ -90,28 +90,28 @@ void set_led(color_t color) {
 void flicker_led(color_t color) {
     switch (color) {
         case Red:
-            set_pin_output_value(LED_RED_D_OUT_PIN, A, 1);
-            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 0);
+            set_pin_output_value(LED_RED_D_OUT_PIN, D, 1);
+            set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 0);
             for (int i = 0; i < 3; i++) {
                 _delay_ms(250);
-                set_pin_output_value(LED_RED_D_OUT_PIN, A, 0);
+                set_pin_output_value(LED_RED_D_OUT_PIN, D, 0);
                 _delay_ms(250);
-                set_pin_output_value(LED_RED_D_OUT_PIN, A, 1);
+                set_pin_output_value(LED_RED_D_OUT_PIN, D, 1);
             }
             break;
         case Green:
-            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 1);
-            set_pin_output_value(LED_RED_D_OUT_PIN, A, 0);
+            set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 1);
+            set_pin_output_value(LED_RED_D_OUT_PIN, D, 0);
             for (int i = 0; i < 3; i++) {
                 _delay_ms(250);
-                set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 0);
+                set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 0);
                 _delay_ms(250);
-                set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 1);
+                set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 1);
             }
             break;
         case None:
-            set_pin_output_value(LED_GREEN_D_OUT_PIN, A, 0);
-            set_pin_output_value(LED_RED_D_OUT_PIN, A, 0);
+            set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 0);
+            set_pin_output_value(LED_RED_D_OUT_PIN, D, 0);
             break;
     }
 }
@@ -121,52 +121,4 @@ uint16_t us_sound_to_centimeters(uint16_t us) {
     return distance_cen;
 }
 
-void set_pwm(int perc_duty_cycle, motor_choice_t choice) {
-    
-    // Set output pins MUX
-    PORTMUX.TCBROUTEA = (0 << 0) | // TCB0 PWM on PA2
-            (0 << 1); // TCB1 PWN on PA3
-    
-    // Period
-    uint8_t wave_per = F_CPU / (2 * PWM_FREQ) - 1;;
-    
-    uint8_t pulse_width = (uint8_t)((uint16_t)perc_duty_cycle * wave_per / 100);
-    
-    switch (choice) {
-        case Motor_Choice_Both:
-            TCB0.CTRLA = (1 << 0); // Enable timer, use DIV1 for CLK 
 
-            TCB0.CCMPL = wave_per;
-            TCB0.CCMPH = pulse_width;
-
-            TCB0.CTRLB = (1 << 4) | // Make output available on MUXed pin
-                    (0x7); // Use 8-bit PWM mode
-            
-            TCB1.CTRLA = (1 << 0); // Enable timer, use DIV1 for CLK 
-
-            TCB1.CCMPL = wave_per;
-            TCB1.CCMPH = pulse_width;
-
-            TCB1.CTRLB = (1 << 4) | // Make output available on MUXed pin
-                (0x7); // Use 8-bit PWM mode
-            break;
-        case Motor_Choice_Left:
-            TCB0.CTRLA = (1 << 0); // Enable timer, use DIV1 for CLK 
-
-            TCB0.CCMPL = wave_per;
-            TCB0.CCMPH = pulse_width;
-
-            TCB0.CTRLB = (1 << 4) | // Make output available on MUXed pin
-                    (0x7); // Use 8-bit PWM mode
-            break;
-        case Motor_Choice_Right:
-            TCB1.CTRLA = (1 << 0); // Enable timer, use DIV1 for CLK 
-
-            TCB1.CCMPL = wave_per;
-            TCB1.CCMPH = pulse_width;
-
-            TCB1.CTRLB = (1 << 4) | // Make output available on MUXed pin
-                (0x7); // Use 8-bit PWM mode
-            break;
-    }
-}

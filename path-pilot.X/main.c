@@ -29,6 +29,7 @@ int main(void) {
     u_println("Application starting");
     
     move(Forward);
+    
     indicate_status(PathClear);
     
     while (1) {
@@ -41,6 +42,7 @@ int main(void) {
             indicate_status(PathClear);
         }
     }
+    
 }
 
 void configure_pins() {

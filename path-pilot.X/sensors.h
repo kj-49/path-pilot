@@ -23,11 +23,7 @@ void set_led(color_t color);
 
 void flicker_led(color_t color);
 
-typedef enum {
-    Motor_Choice_Left,
-    Motor_Choice_Right,
-    Motor_Choice_Both
-} motor_choice_t;
+
 
 
 #endif	/* SENSORS_H */
