@@ -27,7 +27,7 @@ int main(void) {
     usart_init();
     boot_car();
 
-    move(Foward);
+    move(Forward);
     
     
     indicate_status(PathClear);
