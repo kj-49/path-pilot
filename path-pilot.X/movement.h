@@ -44,9 +44,11 @@ typedef enum {
  * --------------------
  * checks for any objects in the path of car.
  *
+ * was_obstruction: the current state of our application
+ * 
  * returns: returns 1 when an object is detected, and 0 otherwise.
  */
-int obstruction();
+int obstruction(int was_obstruction);
 
 /*
  * Function:  stop_car 
@@ -58,10 +60,13 @@ void stop_car();
 /*
  * Function:  evade 
  * --------------------
+ * 
+ * was_obstruction: the current state of our application
+ * 
  * Attempts to move car away from any obstructions to its path. Function will
  * only return once objects are no longer detected.
  */
-void evade();
+void evade(int was_obstruction);
 
 /*
  * Function:  move 

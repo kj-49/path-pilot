@@ -16,7 +16,7 @@
 #include <avr/delay.h>
 
 #define OPERATING_DUTY_CYCLE 50
-
+#define DEBOUNCE_COUNT 20
 // Prototypes
 void configure_pins();
 void boot_car();
@@ -31,26 +31,24 @@ int main(void) {
     
     indicate_status(PathClear);
     
-    int debounce = 30;
-    int obs_detected = 0;
-    
+    int obs_count = 0;
+    int was_obstruction = 0;
     while (1) {
         // Check sonar reading
-        if (obstruction()) {
-            obs_detected++;
-            if (obs_detected < debounce){
-                continue;
-            }
-            //u_println("Obstruction detected.");
-            // Only set LED for initial reading of obstruction
+        if (obstruction(was_obstruction)) {
+            obs_count++;
+            if (!(obs_count > DEBOUNCE_COUNT)) continue; // Skip if noise
+            was_obstruction = 1;
+            
             indicate_status(PathObstructed);
-            evade();
+            evade(was_obstruction);
+            was_obstruction = 0; // If we return from evade we know the path is clear
+            
             indicate_status(PathClear);
         } else {
-            obs_detected = 0;
+            was_obstruction = 0;
+            obs_count = 0;
         }
-        // Experimental, could help to check less frequently.
-        //_delay_us(50000); // delay 50 milliseconds
     }
     
 }

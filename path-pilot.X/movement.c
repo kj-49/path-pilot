@@ -37,16 +37,27 @@ Transistor 2            Transistor 3
 #include <avr/io.h>
 
 // When to count obstruction in cm.
-#define DISTANCE_THRESHOLD 10
+#define STOP_THRESHOLD 15 // Stop if below 10
+#define GO_THRESHOLD 20 // Go if above 12
 
 void left_wheel_set(direction_t dir);
 void right_wheel_set(direction_t dir);
 
-int obstruction() {
-    if (get_distance() <= DISTANCE_THRESHOLD) {
+int obstruction(int was_obstruction) {
+    float dist = get_distance();
+    /*
+     * To change application state, we must be either over the GO_THRESHOLD
+     * or under the STOP_THRESHOLD. The reason these number are not the same
+     * is to avoid metastability where a sensor reading maybe vary ~1cm and
+     * flicker our application state. This way, our app either meets these
+     * requirements, or the state remains unchanged.
+     */
+    if (dist <= STOP_THRESHOLD) {
         return 1;
+    } else if (dist > GO_THRESHOLD) {
+        return 0;
     }
-    return 0;
+    return was_obstruction;
 }
 
 void stop_car() {  
@@ -56,12 +67,19 @@ void stop_car() {
     set_pin_output_value(RBACK_A_OUT_PIN, A, 0);
 }
 
-void evade() {
+void evade(int was_obstruction) {
     stop_car();
     rotate_indefinite(CounterClockwise);
     
-    while (obstruction()) {
-        ; // Wait for a clear path to be found
+    int safe_count = 0;
+    
+    while (safe_count < 20) {
+        // Wait for a clear path to be found
+        if (!obstruction(was_obstruction)) {
+            safe_count++;
+        } else {
+            safe_count = 0;
+        }
     }
     stop_car();
     
