@@ -101,5 +101,13 @@ void rotate_indefinite(spindirection_t dir);
  */
 void indicate_status(status_t status);
 
+/*
+ * Function:  set_pwm 
+ * --------------------
+ * sets pwm to motors
+ * 
+ */
+void set_pwm(int perc_duty_cycle, motor_choice_t choice);
+
 #endif	/* MOVEMENT_H */
 

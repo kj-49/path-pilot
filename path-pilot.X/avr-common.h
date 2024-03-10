@@ -8,7 +8,44 @@
 #ifndef AVR_COMMON_H
 #define	AVR_COMMON_H
 
-// Available AVR pins
+/*
+   ____________________________
+  |                            |
+--| PA0 TRIG                   |
+  | PA1 ECHO                   |
+  | PA2 ENA                    |
+  | PA3 ENB                    |
+  | PA4 IN1                    |
+  | PA5 IN2                    |
+  | PA6 IN3                    |
+  | PA7 IN4                    |
+  |                            |
+  | GND                        |
+  | PD1 GREEN LED              |
+  | PD2 RED LED                |
+  | PD3                        |
+  | PD4                        |
+  | PD5                        |
+  | PD6                        |
+  | PD7                        |
+  |                            |
+  | GND                        |
+  | VDD                        |
+  |____________________________|
+
+ * 
+ */
+
+
+// A pins
+#define SONAR_TRIG_A_OUT_PIN 0 // Sonar pulse
+#define SONAR_ECHO_A_IN_PIN 1 // Sonar echo
+#define LEN_A_OUT_PIN 2 // Left motor enable (PWM) (Comes out of OUT1)
+#define REN_A_OUT_PIN 3 // Right motor enable (PWM) (Comes out of OUT4)
+#define LFOR_A_OUT_PIN 4 // Left motor foward (IN1)
+#define LBACK_A_OUT_PIN 5 // Left motor backward (IN2)
+#define RFOR_A_OUT_PIN 6 // Right motor foward (IN3)
+#define RBACK_A_OUT_PIN 7 // Right motor backward (IN4)
 
 // D pins
 #define PIN0_D_PIN 0 // Ground
@@ -20,15 +57,7 @@
 #define USART_D_IN_PIN 6 
 #define USART_D_OUT_PIN 7 // Usart transmission
 
-// A pins
-#define SONAR_TRIG_A_OUT_PIN 0 // Sonar pulse
-#define SONAR_ECHO_A_IN_PIN 1 // Sonar echo
-#define LEN_A_OUT_PIN 2 // Left motor enable (PWM) (Comes out of OUT1)
-#define REN_A_OUT_PIN 3 // Right motor enable (PWM) (Comes out of OUT4)
-#define LFOR_A_OUT_PIN 4 // Left motor foward (IN1)
-#define LBACK_A_OUT_PIN 5 // Left motor backward (IN2)
-#define RFOR_A_OUT_PIN 6 // Right motor foward (IN3)
-#define RBACK_A_OUT_PIN 7 // Right motor backward (IN4)
+
 
 #define DEBUGGING 1
 #define PWM_FREQ 2000

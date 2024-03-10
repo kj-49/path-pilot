@@ -15,6 +15,8 @@
 #include <avr/interrupt.h>
 #include <avr/delay.h>
 
+#define OPERATING_DUTY_CYCLE 50
+
 // Prototypes
 void configure_pins();
 void boot_car();
@@ -24,11 +26,9 @@ int main(void) {
     // Initialize USART
     usart_init();
     boot_car();
+
+    move(Foward);
     
-    u_println("--------------------");
-    u_println("Application starting");
-    
-    move(Forward);
     
     indicate_status(PathClear);
     
@@ -41,6 +41,8 @@ int main(void) {
             evade();
             indicate_status(PathClear);
         }
+        // Experimental, could help to check less frequently.
+        _delay_us(50000); // delay 50 milliseconds
     }
     
 }
@@ -67,4 +69,7 @@ void boot_car() {
     
     // Flash LED to indicate restart
     flicker_led(Green);
+    
+    // Start pwm
+    set_pwm(OPERATING_DUTY_CYCLE, Motor_Choice_Both);
 }
