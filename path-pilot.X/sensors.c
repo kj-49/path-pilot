@@ -10,9 +10,9 @@
 #include "avr-common.h"
 #include <util/delay.h>
 
-uint16_t us_sound_to_centimeters(uint16_t us);
+float us_sound_to_centimeters(float us);
 
-uint16_t get_distance() {       
+float get_distance() {       
    
     /*
      * Note: By default, CLKCTRL.MCLKCTRLA is set to 0x00.
@@ -65,7 +65,7 @@ uint16_t get_distance() {
     TCA0.SINGLE.CTRLA = 0b000000000;
     
     // calculate distance
-    volatile uint16_t distance = us_sound_to_centimeters(micros/2);
+    volatile float distance = us_sound_to_centimeters(micros/2);
     
     return distance;
 }
@@ -92,20 +92,20 @@ void flicker_led(color_t color) {
         case Red:
             set_pin_output_value(LED_RED_D_OUT_PIN, D, 1);
             set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 0);
-            for (int i = 0; i < 3; i++) {
-                _delay_ms(250);
+            for (int i = 0; i < 4; i++) {
+                _delay_ms(500);
                 set_pin_output_value(LED_RED_D_OUT_PIN, D, 0);
-                _delay_ms(250);
+                _delay_ms(500);
                 set_pin_output_value(LED_RED_D_OUT_PIN, D, 1);
             }
             break;
         case Green:
             set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 1);
             set_pin_output_value(LED_RED_D_OUT_PIN, D, 0);
-            for (int i = 0; i < 3; i++) {
-                _delay_ms(250);
+            for (int i = 0; i < 4; i++) {
+                _delay_ms(500);
                 set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 0);
-                _delay_ms(250);
+                _delay_ms(500);
                 set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 1);
             }
             break;
@@ -116,8 +116,8 @@ void flicker_led(color_t color) {
     }
 }
 
-uint16_t us_sound_to_centimeters(uint16_t us) {
-    volatile uint16_t distance_cen = (us * 0.0343);
+float us_sound_to_centimeters(float us) {
+    volatile float distance_cen = (us * 0.0343);
     return distance_cen;
 }
 

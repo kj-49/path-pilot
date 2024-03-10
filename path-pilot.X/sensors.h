@@ -17,7 +17,7 @@ typedef enum {
     None
 } color_t;
 
-uint16_t get_distance();
+float get_distance();
 
 void set_led(color_t color);
 

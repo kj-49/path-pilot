@@ -29,20 +29,28 @@ int main(void) {
 
     move(Forward);
     
-    
     indicate_status(PathClear);
+    
+    int debounce = 30;
+    int obs_detected = 0;
     
     while (1) {
         // Check sonar reading
         if (obstruction()) {
+            obs_detected++;
+            if (obs_detected < debounce){
+                continue;
+            }
             //u_println("Obstruction detected.");
             // Only set LED for initial reading of obstruction
             indicate_status(PathObstructed);
             evade();
             indicate_status(PathClear);
+        } else {
+            obs_detected = 0;
         }
         // Experimental, could help to check less frequently.
-        _delay_us(50000); // delay 50 milliseconds
+        //_delay_us(50000); // delay 50 milliseconds
     }
     
 }
@@ -53,12 +61,16 @@ void configure_pins() {
     PORTA.DIRCLR = (1 << SONAR_ECHO_A_IN_PIN);
     
     // Configure output pins
-    PORTD.DIRSET = (1 << LEN_A_OUT_PIN) | 
+    PORTA.DIRSET = (1 << LEN_A_OUT_PIN) | 
         (1 << REN_A_OUT_PIN) | 
         (1 << LFOR_A_OUT_PIN) | 
         (1 << LBACK_A_OUT_PIN) |
         (1 << RFOR_A_OUT_PIN) |
         (1 << RBACK_A_OUT_PIN);
+    
+    PORTD.DIRSET = (1 << LED_GREEN_D_OUT_PIN) |
+        (1 << LED_RED_D_OUT_PIN);
+ 
     
     PORTA.DIRSET = (1 << SONAR_TRIG_A_OUT_PIN);
     
