@@ -87,33 +87,19 @@ void set_led(color_t color) {
     }
 }
 
-void flicker_led(color_t color) {
-    switch (color) {
-        case Red:
-            set_pin_output_value(LED_RED_D_OUT_PIN, D, 1);
-            set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 0);
-            for (int i = 0; i < 4; i++) {
-                _delay_ms(500);
-                set_pin_output_value(LED_RED_D_OUT_PIN, D, 0);
-                _delay_ms(500);
-                set_pin_output_value(LED_RED_D_OUT_PIN, D, 1);
-            }
-            break;
-        case Green:
-            set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 1);
-            set_pin_output_value(LED_RED_D_OUT_PIN, D, 0);
-            for (int i = 0; i < 4; i++) {
-                _delay_ms(500);
-                set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 0);
-                _delay_ms(500);
-                set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 1);
-            }
-            break;
-        case None:
-            set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 0);
-            set_pin_output_value(LED_RED_D_OUT_PIN, D, 0);
-            break;
+void flicker_led() {
+    set_pin_output_value(LED_RED_D_OUT_PIN, D, 1);
+    set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 0);
+    for (int i = 0; i < 2; i++) {
+        _delay_ms(1000);
+        set_pin_output_value(LED_RED_D_OUT_PIN, D, 0);
+        set_pin_output_value(BUZZER_D_OUT_PIN, D, 1);
+        _delay_ms(1000);
+        set_pin_output_value(LED_RED_D_OUT_PIN, D, 1);
+        set_pin_output_value(BUZZER_D_OUT_PIN, D, 0);
     }
+    _delay_ms(1000);
+    set_pin_output_value(LED_GREEN_D_OUT_PIN, D, 1);
 }
 
 float us_sound_to_centimeters(float us) {

@@ -15,7 +15,7 @@
 #include <avr/interrupt.h>
 #include <avr/delay.h>
 
-#define OPERATING_DUTY_CYCLE 50
+#define OPERATING_DUTY_CYCLE 70
 #define DEBOUNCE_COUNT 20
 // Prototypes
 void configure_pins();
@@ -67,7 +67,8 @@ void configure_pins() {
         (1 << RBACK_A_OUT_PIN);
     
     PORTD.DIRSET = (1 << LED_GREEN_D_OUT_PIN) |
-        (1 << LED_RED_D_OUT_PIN);
+        (1 << LED_RED_D_OUT_PIN) |
+        (1 << BUZZER_D_OUT_PIN);
  
     
     PORTA.DIRSET = (1 << SONAR_TRIG_A_OUT_PIN);

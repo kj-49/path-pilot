@@ -51,7 +51,7 @@
 #define PIN0_D_PIN 0 // Ground
 #define LED_GREEN_D_OUT_PIN 1 
 #define LED_RED_D_OUT_PIN 2 
-#define D_PIN3 3
+#define BUZZER_D_OUT_PIN 3
 #define D_PIN4 4 
 #define D_PIN5 5 
 #define USART_D_IN_PIN 6 

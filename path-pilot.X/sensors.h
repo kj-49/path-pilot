@@ -21,7 +21,7 @@ float get_distance();
 
 void set_led(color_t color);
 
-void flicker_led(color_t color);
+void flicker_led();
 
 
 
