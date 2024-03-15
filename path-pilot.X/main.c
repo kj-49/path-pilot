@@ -15,7 +15,7 @@
 #include <avr/interrupt.h>
 #include <avr/delay.h>
 
-#define OPERATING_DUTY_CYCLE 70
+#define OPERATING_DUTY_CYCLE 99
 #define DEBOUNCE_COUNT 20
 // Prototypes
 void configure_pins();
@@ -37,7 +37,7 @@ int main(void) {
         // Check sonar reading
         if (obstruction(was_obstruction)) {
             obs_count++;
-            if (!(obs_count > DEBOUNCE_COUNT)) continue; // Skip if noise
+            if (obs_count < DEBOUNCE_COUNT) continue; // Skip if noise
             was_obstruction = 1;
             
             indicate_status(PathObstructed);
@@ -49,6 +49,7 @@ int main(void) {
             was_obstruction = 0;
             obs_count = 0;
         }
+        handle_headlights();
     }
     
 }
@@ -59,7 +60,8 @@ void configure_pins() {
     PORTA.DIRCLR = (1 << SONAR_ECHO_A_IN_PIN);
     
     // Configure output pins
-    PORTA.DIRSET = (1 << LEN_A_OUT_PIN) | 
+    PORTA.DIRSET = (1 << SONAR_TRIG_A_OUT_PIN) |
+        (1 << LEN_A_OUT_PIN) | 
         (1 << REN_A_OUT_PIN) | 
         (1 << LFOR_A_OUT_PIN) | 
         (1 << LBACK_A_OUT_PIN) |
@@ -68,15 +70,16 @@ void configure_pins() {
     
     PORTD.DIRSET = (1 << LED_GREEN_D_OUT_PIN) |
         (1 << LED_RED_D_OUT_PIN) |
-        (1 << BUZZER_D_OUT_PIN);
- 
+        (1 << BUZZER_D_OUT_PIN) |
+        (1 << HEADLIGHTS_D_OUT_PIN);
     
-    PORTA.DIRSET = (1 << SONAR_TRIG_A_OUT_PIN);
-    
+    PORTD.DIRCLR = (1 << PHOTO_D_IN_PIN);
 }
 
 void boot_car() {
     configure_pins();
+    
+    configure_ac();
     
     // Flash LED to indicate restart
     flicker_led(Green);

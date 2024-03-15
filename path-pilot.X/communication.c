@@ -17,7 +17,7 @@
 
 void usart_init() {
     // Set PIND7 to output
-    PORTD.DIRSET |= (1 << USART_D_OUT_PIN) | (1 << USART_D_IN_PIN);
+    PORTD.DIRSET |= (1 << USART_D_IN_PIN);
     
     USART1.BAUD = (uint16_t)(9600);
     

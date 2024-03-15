@@ -23,10 +23,10 @@
   | GND                        |
   | PD1 GREEN LED              |
   | PD2 RED LED                |
-  | PD3                        |
+  | PD3 BUZZER                 |
   | PD4                        |
-  | PD5                        |
-  | PD6                        |
+  | PD5 HEADLIGHTS             |
+  | PD6 PHOTOIN                |
   | PD7                        |
   |                            |
   | GND                        |
@@ -52,10 +52,10 @@
 #define LED_GREEN_D_OUT_PIN 1 
 #define LED_RED_D_OUT_PIN 2 
 #define BUZZER_D_OUT_PIN 3
-#define D_PIN4 4 
+#define HEADLIGHTS_D_OUT_PIN 4 
 #define D_PIN5 5 
-#define USART_D_IN_PIN 6 
-#define USART_D_OUT_PIN 7 // Usart transmission
+#define PHOTO_D_IN_PIN 6 // Need to use AC0, AINP3
+#define USART_D_IN_PIN 7 // Usart transmission
 
 
 

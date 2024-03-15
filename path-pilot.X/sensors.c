@@ -11,6 +11,8 @@
 #include <util/delay.h>
 
 float us_sound_to_centimeters(float us);
+int photo_changed();
+int in_darkness();
 
 float get_distance() {       
    
@@ -107,4 +109,73 @@ float us_sound_to_centimeters(float us) {
     return distance_cen;
 }
 
+void configure_ac() {
+    // Enable global interrupts.
+    SREG = 0b10000000;
+    
+    // Enable AC and set Medium Hysteresis
+    AC0.CTRLA = 0b00000111;
+    
+    /*
+     * To use PD6 on AC0, we need AINP3
+     */
+    AC0.MUXCTRL = (0x3 << 3) | // Set AINP3 for +
+            (0 << 0x3); // Set DACREF for -
+    
+    // Use VDD as reference
+    VREF.ACREF = 0b00000101;
+    
+    // Set DACREF to 128.
+    /*
+     * DACREF is a variable in the formula Vdacref = (DACREF/256) * Vref
+     * Vref is set in VREF.ACREF
+     * Vdacref (should be 2.5v) is the actual value which PD6 will be compared to.
+     */
+    AC0.DACREF = 0b10000000;
+    
+    AC0.INTCTRL = (0x1 << 0) | // Enabled AC interrupt. Will be triggered when CMPIF bit in AC0.STATUS is set.
+            (0x0 << 4); // Generate interrupt on Positive & Negative crosses
+    /*
+     * See check output: bit 0 of AC0.STATUS will be 1 when edge is crossed in any direction (2.5v).
+     * To tell which way we have crossed:
+     * Bit 4 of AC0.STATUS is CMPSTATE bit. It is 1 when High
+     * and 0 when low.
+     */
+}
 
+int handle_headlights() {
+    if (photo_changed()) {
+        int new_io_value = in_darkness();
+        set_pin_output_value(HEADLIGHTS_D_OUT_PIN, D, new_io_value);
+    }
+    photo_changed();
+}
+
+int photo_changed() {
+    if (AC0.STATUS) {
+    }
+    if (AC0.STATUS & (1 << 0)) {
+        AC0.STATUS = 1;
+        return 1;
+    }
+    return 0;
+}
+
+/*
+ * For our photo resistor --
+ * Bright light: <= ~1kohm
+ * Room light: ~1kohm - ~75kohm
+ * Darkness: >= 75kohm (up to 350kohm+)
+ * 
+ * For 5.1kohm:
+ * Normal Vin > 2.5, Dark Vin < 1.3
+ */
+int in_darkness() {
+    if (AC0.STATUS) {
+    }
+    if (AC0.STATUS & (1 << 4)) { // if comparator crossed to positive
+        return 0;
+    } else { // comparator crossed to negative
+        return 1;
+    }
+}
