@@ -25,7 +25,7 @@ void configure_ac() ;
 void set_led(color_t color);
 
 void flicker_led();
-int handle_headlights();
+void handle_headlights();
 
 
 

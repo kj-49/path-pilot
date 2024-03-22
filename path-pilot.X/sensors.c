@@ -143,7 +143,7 @@ void configure_ac() {
      */
 }
 
-int handle_headlights() {
+void handle_headlights() {
     if (photo_changed()) {
         int new_io_value = in_darkness();
         set_pin_output_value(HEADLIGHTS_D_OUT_PIN, D, new_io_value);

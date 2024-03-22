@@ -8,6 +8,92 @@
 #include "avr-common.h"
 #include <avr/io.h>
 
+
+pin_t sonar_trig_pin = {
+    0,
+    A,
+    OUT
+};
+pin_t sonar_echo_pin = {
+    1,
+    A,
+    IN
+};
+pin_t left_enable_pin = {
+    2,
+    A,
+    OUT
+};
+pin_t right_enable_pin = {
+    3,
+    A,
+    OUT
+};
+pin_t left_forward_pin = {
+    4,
+    A,
+    OUT
+};
+pin_t left_backward_pin = {
+    5,
+    A,
+    OUT
+};
+pin_t right_foward_pin = {
+    6,
+    A,
+    OUT
+};
+pin_t right_backward_pin = {
+    7,
+    A,
+    OUT
+};
+pin_t green_led_pin = {
+    1,
+    D,
+    OUT
+};
+pin_t red_led_pin = {
+    2,
+    D,
+    OUT
+};
+pin_t buzzer_led_pin = {
+    3,
+    D,
+    OUT
+};
+pin_t headlights_led_pin = {
+    4,
+    D,
+    OUT
+};
+pin_t photocell_in_pin = {
+    6,
+    D,
+    IN
+};
+
+pin_t* get_pins() {
+    volatile pin_t pins[] = {
+        sonar_trig_pin,
+        sonar_echo_pin,
+        left_enable_pin,
+        right_enable_pin,
+        left_forward_pin,
+        left_backward_pin,
+        right_foward_pin,
+        right_backward_pin,
+        green_led_pin,
+        red_led_pin,
+        buzzer_led_pin,
+        headlights_led_pin,
+        photocell_in_pin
+    };
+    return pins;
+}
+
 int compare_pin_input_value(int pin, port_t port, int value) {  
     switch (port) {
         case A:
@@ -30,6 +116,7 @@ int compare_pin_input_value(int pin, port_t port, int value) {
 }
 
 void set_pin_output_value(int pin, port_t port, int value) {
+
     switch (port) {
         case A:
             if (value) {

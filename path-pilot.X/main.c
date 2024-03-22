@@ -21,8 +21,12 @@
 void configure_pins();
 void boot_car();
 
-int main(void) { 
-
+int main(void) {
+    
+    volatile pin_t *pins = get_pins();
+    volatile pin_t pin = *(pins + 2);
+    
+    
     // Initialize USART
     usart_init();
     boot_car();

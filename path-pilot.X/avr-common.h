@@ -63,9 +63,41 @@
 #define PWM_FREQ 2000
 
 typedef enum {
+    IN,
+    OUT
+} pin_direction_t;
+
+typedef enum {
     A,
     D
 } port_t;
+
+typedef struct {
+    int position;
+    port_t port;
+    pin_direction_t direction;
+} pin_t;
+
+
+
+typedef struct {
+    pin_t sonar_trig_pin;
+    pin_t sonar_echo_pin;
+    pin_t left_enable_pin;
+    pin_t right_enable_pin;
+    pin_t left_foward_pin;
+    pin_t left_backward_pin;
+    pin_t right_foward_pin;
+    pin_t right_backward_pin;
+    pin_t green_led_pin;
+    pin_t red_led_pin;
+    pin_t buzzer_pin;
+    pin_t headlights_pin;
+    pin_t photocell_in_pin;
+} pinset_t;
+
+pin_t* get_pins();
+
 
 /*
  * Function:  set_pin_output_value 
