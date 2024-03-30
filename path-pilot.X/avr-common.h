@@ -8,21 +8,46 @@
 #ifndef AVR_COMMON_H
 #define	AVR_COMMON_H
 
+/* 
+ * This code to reliant on an H-Bridge circuit to control the direction of a our dc motors.
+             VCC
+             |
+  -----------|-----------
+  |                      |
+  |                      |
+Transistor 0            Transistor 1
+  |                      |
+  |                      |
+  ------ + MOTOR - -------
+  |                      |
+  |                      |
+Transistor 2            Transistor 3
+  |                      |
+  |                      |
+  -----------|-----------
+             |
+          Ground
+
+ */
+
+
 /*
    ____________________________
   |                            |
 --| PA0 TRIG                   |
   | PA1 ECHO                   |
-  | PA2 ENA                    |
-  | PA3 ENB                    |
-  | PA4 IN1                    |
-  | PA5 IN2                    |
-  | PA6 IN3                    |
-  | PA7 IN4                    |
+  | PA2 L FORWARD HIGH GATE    |
+  | PA3 L REVERSE HIGH GATE    |
+  | PA4 R FORWARD HIGH GATE    |
+  | PA5 !RESERVED              |
+  | PA6 L FORWARD LOW GATE     |
+  | PA7 L REVERSE LOW GATE     |
+  |                            |
+  | PC0 R REVERSE HIGH GATE    |
   |                            |
   | GND                        |
-  | PD1 GREEN LED              |
-  | PD2 RED LED                |
+  | PD1 R FORWARD LOW GATE     |
+  | PD2 R REVERSE LOW GATE     |
   | PD3 BUZZER                 |
   | PD4                        |
   | PD5 HEADLIGHTS             |
@@ -31,30 +56,39 @@
   |                            |
   | GND                        |
   | VDD                        |
-  |____________________________|
+  |____________________________| 
+ */
 
- * 
+/*
+ * Available pins for Timers:
+ * TCB0: PA2
+ * TCB1: PA3
+ * TCB2: PC0
+ * TCD0: PA4 (W0A), PA5 (W0B)
  */
 
 
 // A pins
 #define SONAR_TRIG_A_OUT_PIN 0 // Sonar pulse
 #define SONAR_ECHO_A_IN_PIN 1 // Sonar echo
-#define LEN_A_OUT_PIN 2 // Left motor enable (PWM) (Comes out of OUT1)
-#define REN_A_OUT_PIN 3 // Right motor enable (PWM) (Comes out of OUT4)
-#define LFOR_A_OUT_PIN 4 // Left motor foward (IN1)
-#define LBACK_A_OUT_PIN 5 // Left motor backward (IN2)
-#define RFOR_A_OUT_PIN 6 // Right motor foward (IN3)
-#define RBACK_A_OUT_PIN 7 // Right motor backward (IN4)
+#define L_FOR_HI_A_OUT_PIN 2 // TCB0 Output
+#define L_REV_HI_A_OUT_PIN 3 // TCB1 Output
+#define R_FOR_HI_A_OUT_PIN 4 // TCD0 W0 Output
+#define RESERVED_A_PIN 5 // TCD W1 Output
+#define L_FOR_LO_A_OUT_PIN 6 // Right motor foward (IN3)
+#define L_REV_LO_A_OUT_PIN 7 // Right motor backward (IN4)
+
+// C pins
+#define R_REV_HI_C_OUT_PIN 0 // TCB2 Output
 
 // D pins
-#define PIN0_D_PIN 0 // Ground
-#define LED_GREEN_D_OUT_PIN 1 
+#define R_FOR_LO_D_OUT_PIN 0 // Ground
+#define R_REV_LO_D_OUT_PIN 1 
 #define LED_RED_D_OUT_PIN 2 
 #define BUZZER_D_OUT_PIN 3
-#define HEADLIGHTS_D_OUT_PIN 4 
+#define D_PIN4 4 
 #define D_PIN5 5 
-#define PHOTO_D_IN_PIN 6 // Need to use AC0, AINP3
+#define D_PIN6 6 // Need to use AC0, AINP3
 #define USART_D_IN_PIN 7 // Usart transmission
 
 

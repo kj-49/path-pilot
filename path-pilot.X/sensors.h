@@ -11,21 +11,7 @@
 #include <avr/io.h>
 #include <avr/delay.h>
 
-typedef enum {
-    Red,
-    Green,
-    None
-} color_t;
-
 float get_distance();
-
-int in_darkness();
-void configure_ac() ;
-
-void set_led(color_t color);
-
-void flicker_led();
-int handle_headlights();
 
 
 

@@ -19,17 +19,15 @@
 #define DEBOUNCE_COUNT 20
 // Prototypes
 void configure_pins();
+void configure();
 void boot_car();
 
 int main(void) { 
 
     // Initialize USART
-    usart_init();
-    boot_car();
+    configure();
 
     move(Forward);
-    
-    indicate_status(PathClear);
     
     int obs_count = 0;
     int was_obstruction = 0;
@@ -39,17 +37,12 @@ int main(void) {
             obs_count++;
             if (obs_count < DEBOUNCE_COUNT) continue; // Skip if noise
             was_obstruction = 1;
-            
-            indicate_status(PathObstructed);
             evade(was_obstruction);
             was_obstruction = 0; // If we return from evade we know the path is clear
-            
-            indicate_status(PathClear);
         } else {
             was_obstruction = 0;
             obs_count = 0;
         }
-        handle_headlights();
     }
     
 }
@@ -61,29 +54,41 @@ void configure_pins() {
     
     // Configure output pins
     PORTA.DIRSET = (1 << SONAR_TRIG_A_OUT_PIN) |
-        (1 << LEN_A_OUT_PIN) | 
-        (1 << REN_A_OUT_PIN) | 
-        (1 << LFOR_A_OUT_PIN) | 
-        (1 << LBACK_A_OUT_PIN) |
-        (1 << RFOR_A_OUT_PIN) |
-        (1 << RBACK_A_OUT_PIN);
+        (1 << L_FOR_HI_A_OUT_PIN) | 
+        (1 << L_REV_HI_A_OUT_PIN) | 
+        (1 << R_FOR_HI_A_OUT_PIN) | 
+        (1 << RESERVED_A_PIN) |
+        (1 << L_FOR_LO_A_OUT_PIN) |
+        (1 << L_REV_LO_A_OUT_PIN);
     
-    PORTD.DIRSET = (1 << LED_GREEN_D_OUT_PIN) |
+    PORTC.DIRSET = (1 << R_REV_HI_C_OUT_PIN);
+    
+    PORTD.DIRSET = (1 << R_FOR_LO_D_OUT_PIN) |
+        (1 << R_REV_LO_D_OUT_PIN) |
         (1 << LED_RED_D_OUT_PIN) |
-        (1 << BUZZER_D_OUT_PIN) |
-        (1 << HEADLIGHTS_D_OUT_PIN);
-    
-    PORTD.DIRCLR = (1 << PHOTO_D_IN_PIN);
+        (1 << BUZZER_D_OUT_PIN);
 }
 
-void boot_car() {
+void configure() {
     configure_pins();
     
-    configure_ac();
+    /*
+     * This sets the Internal High-Frequency Clock to 1MHz.
+     * This is important for our Ultra Sonic sensor measurements and conversion.
+     * This will also be the clock used for our four PWM signals.
+     */
+    CCP = 0xd8;
+    // 1MHz for clock
+    CLKCTRL.OSCHFCTRLA = 0b00000000;
+    // Wait for clock to change
+    while (CLKCTRL.MCLKSTATUS & 0b00000001) {
+        ;
+    }
     
-    // Flash LED to indicate restart
-    flicker_led(Green);
-    
-    // Start pwm
-    set_pwm(OPERATING_DUTY_CYCLE, Motor_Choice_Both);
+    // Initalize PWM
+    TCB0_init_pwm(50);
+    TCB1_init_pwm(50);
+    TCB2_init_pwm(50);
+    TCD0_init_pwm(50);
+
 }

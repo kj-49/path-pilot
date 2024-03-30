@@ -39,6 +39,17 @@ typedef enum {
     Motor_Choice_Both
 } motor_choice_t;
 
+typedef enum {
+    LEFT_WHEEL_TOP_LEFT,
+    LEFT_WHEEL_TOP_RIGHT,
+    LEFT_WHEEL_BOTTOM_LEFT,
+    LEFT_WHEEL_BOTTOM_RIGHT,
+    RIGHT_WHEEL_TOP_LEFT,
+    RIGHT_WHEEL_TOP_RIGHT,
+    RIGHT_WHEEL_BOTTOM_LEFT,
+    RIGHT_WHEEL_BOTTOM_RIGHT
+} h_bridge_gate_t;
+
 /*
  * Function:  obstruction 
  * --------------------
@@ -107,12 +118,44 @@ void rotate_indefinite(spindirection_t dir);
 void indicate_status(status_t status);
 
 /*
- * Function:  set_pwm 
+ * Function:  TCB0_init_pwm 
  * --------------------
- * sets pwm to motors
+ * Configures pww for TCB0, but does not enable waveform.
+ * 
+ * perc_duty_cycle: percentage duty cycle
  * 
  */
-void set_pwm(int perc_duty_cycle, motor_choice_t choice);
+void TCB0_init_pwm(int perc_duty_cycle);
+
+/*
+ * Function:  TCB1_init_pwm 
+ * --------------------
+ * Configures pww for TCB1, but does not enable waveform.
+ * 
+ * perc_duty_cycle: percentage duty cycle
+ * 
+ */
+void TCB1_init_pwm(int perc_duty_cycle);
+
+/*
+ * Function:  TCB1_init_pwm 
+ * --------------------
+ * Configures pww for TCB2, but does not enable waveform.
+ * 
+ * perc_duty_cycle: percentage duty cycle
+ * 
+ */
+void TCB2_init_pwm(int perc_duty_cycle);
+
+/*
+ * Function:  TCD0_init_pwm 
+ * --------------------
+ * Configures pww for TCD2, but does not enable waveform.
+ * 
+ * perc_duty_cycle: percentage duty cycle
+ * 
+ */
+void TCD0_init_pwm(int perc_duty_cycle);
 
 #endif	/* MOVEMENT_H */
 
