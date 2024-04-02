@@ -216,34 +216,34 @@ void TCD0_init_pwm(int perc_duty_cycle){
 
 void set_TCB0(int state) {
     if (state) {
-        TCB0.CTRLA |= (1 << 1); // Enable pwm waveform
+        TCB0.CTRLA |= (1 << 0); // Enable pwm waveform
     } else {
-        TCB0.CTRLA &= ~(1 << 1); // Disable pwm waveform
+        TCB0.CTRLA &= ~(1 << 0); // Disable pwm waveform
     }
 }
 
 void set_TCB1(int state) {
     if (state) {
-        TCB1.CTRLA |= (1 << 1); // Enable pwm waveform
+        TCB1.CTRLA |= (1 << 0); // Enable pwm waveform
     } else {
-        TCB1.CTRLA &= ~(1 << 1); // Disable pwm waveform
+        TCB1.CTRLA &= ~(1 << 0); // Disable pwm waveform
     }
 }
 
 void set_TCB2(int state) {
     if (state) {
-        TCB2.CTRLA |= (1 << 1); // Enable pwm waveform
+        TCB2.CTRLA |= (1 << 0); // Enable pwm waveform
     } else {
-        TCB2.CTRLA &= ~(1 << 1); // Disable pwm waveform
+        TCB2.CTRLA &= ~(1 << 0); // Disable pwm waveform
     }
 }
 
 
 void set_TCD0(int state) {
     if (state) {
-        TCD0.CTRLA |= (1 << 1); // Enable pwm waveform
+        TCD0.CTRLA |= (1 << 0); // Enable pwm waveform
     } else {
-        TCD0.CTRLA &= ~(1 << 1); // Disable pwm waveform
+        TCD0.CTRLA &= ~(1 << 0); // Disable pwm waveform
     }
 }
 
@@ -262,10 +262,10 @@ void set_gate(h_bridge_gate_t gate, int value) {
             set_pin_output_value(L_FOR_LO_A_OUT_PIN, A, value);
             break;
         case RIGHT_WHEEL_TOP_LEFT:
-            set_TCB2(value);
+            set_TCD0(value);
             break;
         case RIGHT_WHEEL_TOP_RIGHT:
-            set_TCD0(value);
+            set_TCB2(value);
             break;
         case RIGHT_WHEEL_BOTTOM_LEFT:
             set_pin_output_value(R_REV_LO_D_OUT_PIN, D, value);
