@@ -82,11 +82,11 @@ Transistor 2            Transistor 3
 #define R_REV_HI_C_OUT_PIN 0 // TCB2 Output
 
 // D pins
-#define R_FOR_LO_D_OUT_PIN 0 // Ground
-#define R_REV_LO_D_OUT_PIN 1 
-#define LED_RED_D_OUT_PIN 2 
-#define BUZZER_D_OUT_PIN 3
-#define D_PIN4 4 
+#define GROUND__ 0 // Ground
+#define R_FOR_LO_D_OUT_PIN 1 
+#define R_REV_LO_D_OUT_PIN 2 
+#define LED_RED_D_OUT_PIN 3
+#define BUZZER_D_OUT_PIN 4 // Ground
 #define D_PIN5 5 
 #define D_PIN6 6 // Need to use AC0, AINP3
 #define USART_D_IN_PIN 7 // Usart transmission

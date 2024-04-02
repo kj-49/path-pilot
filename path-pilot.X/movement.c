@@ -102,7 +102,7 @@ void right_wheel_set(direction_t dir) {
                 // Turn off reverse gates
                 set_gate(RIGHT_WHEEL_TOP_RIGHT, 0);
                 set_gate(RIGHT_WHEEL_BOTTOM_LEFT, 0);
-                _delay_ms(500);
+                //_delay_ms(500);
                 // Turn on forward gates
                 set_gate(RIGHT_WHEEL_TOP_LEFT, 1);
                 set_gate(RIGHT_WHEEL_BOTTOM_RIGHT, 1);
@@ -111,7 +111,7 @@ void right_wheel_set(direction_t dir) {
                 // Turn off forward gates
                 set_gate(RIGHT_WHEEL_TOP_LEFT, 0);
                 set_gate(RIGHT_WHEEL_BOTTOM_RIGHT, 0);
-                _delay_ms(500);
+                //_delay_ms(500);
                 // Turn on reverse gates
                 set_gate(RIGHT_WHEEL_TOP_RIGHT, 1);
                 set_gate(RIGHT_WHEEL_BOTTOM_LEFT, 1);  
@@ -201,18 +201,24 @@ void TCB2_init_pwm(int perc_duty_cycle){
 }
 
 void TCD0_init_pwm(int perc_duty_cycle){
-    TCD0.CTRLB |= 0x00; // Use one ramp mode
+    TCD0.CTRLB = 0x00; // Use one ramp mode
 
     /*
      * A 12-bit timer has 4096 ticks.
      */
-    uint8_t duty_in_ticks = perc_duty_cycle * 4096;
+       // Period
+    uint8_t wave_per = F_CPU / (2 * PWM_FREQ) - 1;;
+    
+    uint8_t pulse_width = (uint8_t)((uint16_t)perc_duty_cycle * wave_per / 100);
+    
+    int period = 4095;
+    volatile int duty_in_ticks = ((float)perc_duty_cycle / 100) * period;
     
     TCD0.CMPASET = 0x00;
-    TCD0.CMPACLR = duty_in_ticks;
+    TCD0.CMPACLR = pulse_width;
        
     TCD0.CMPBSET = 0x00;
-    TCD0.CMPBCLR = duty_in_ticks;
+    TCD0.CMPBCLR = wave_per;
     
     _PROTECTED_WRITE(
             TCD0.FAULTCTRL, 
