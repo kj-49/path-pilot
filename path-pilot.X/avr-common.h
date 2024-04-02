@@ -75,8 +75,8 @@ Transistor 2            Transistor 3
 #define L_REV_HI_A_OUT_PIN 3 // TCB1 Output
 #define R_FOR_HI_A_OUT_PIN 4 // TCD0 W0 Output
 #define RESERVED_A_PIN 5 // TCD W1 Output
-#define L_FOR_LO_A_OUT_PIN 6 // Right motor foward (IN3)
-#define L_REV_LO_A_OUT_PIN 7 // Right motor backward (IN4)
+#define L_FOR_LO_A_OUT_PIN 6 //
+#define L_REV_LO_A_OUT_PIN 7 //
 
 // C pins
 #define R_REV_HI_C_OUT_PIN 0 // TCB2 Output

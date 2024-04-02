@@ -27,7 +27,7 @@ int main(void) {
     // Initialize USART
     configure();
 
-    move(Forward);
+    move(DIRECTION_FORWARD);
     
     
     int obs_count = 0;
@@ -87,7 +87,7 @@ void configure() {
         ;
     }
     
-    // Initalize PWM
+    // Initialize PWM
     TCB0_init_pwm(50);
     TCB1_init_pwm(50);
     TCB2_init_pwm(50);

@@ -41,12 +41,8 @@ int obstruction(int was_obstruction) {
     return was_obstruction;
 }
 
-void stop_car() {  
-
-}
-
 void evade(int was_obstruction) {
-    stop_car();
+    move(DIRECTION_NONE);
     rotate_indefinite(CounterClockwise);
     
     int safe_count = 0;
@@ -59,9 +55,9 @@ void evade(int was_obstruction) {
             safe_count = 0;
         }
     }
-    stop_car();
+    move(DIRECTION_NONE);
     
-    move(Forward);
+    move(DIRECTION_FORWARD);
 }
 
 void move(direction_t dir) {
@@ -71,7 +67,7 @@ void move(direction_t dir) {
 
 void left_wheel_set(direction_t dir) {
     switch (dir) {
-        case Forward:
+        case DIRECTION_FORWARD:
             // Turn off reverse gates
             set_gate(LEFT_WHEEL_TOP_RIGHT, 0);
             set_gate(LEFT_WHEEL_BOTTOM_LEFT, 0);
@@ -80,20 +76,29 @@ void left_wheel_set(direction_t dir) {
             set_gate(LEFT_WHEEL_TOP_LEFT, 1);
             set_gate(LEFT_WHEEL_BOTTOM_RIGHT, 1);
             break;
-        case Reverse:
+        case DIRECTION_REVERSE:
             // Turn off forward gates
             set_gate(LEFT_WHEEL_TOP_LEFT, 0);
             set_gate(LEFT_WHEEL_BOTTOM_RIGHT, 0);
             _delay_ms(500);
             // Turn on reverse gates
             set_gate(LEFT_WHEEL_TOP_RIGHT, 1);
-            set_gate(LEFT_WHEEL_BOTTOM_LEFT, 1);   
+            set_gate(LEFT_WHEEL_BOTTOM_LEFT, 1);  
+            break;
+        case DIRECTION_NONE:
+            // Turn off forward gates
+            set_gate(LEFT_WHEEL_TOP_LEFT, 0);
+            set_gate(LEFT_WHEEL_BOTTOM_RIGHT, 0);
+            // Turn off reverse gates
+            set_gate(LEFT_WHEEL_TOP_RIGHT, 0);
+            set_gate(LEFT_WHEEL_BOTTOM_LEFT, 0);
+            break;
     }
 }
 
 void right_wheel_set(direction_t dir) {
         switch (dir) {
-            case Forward:
+            case DIRECTION_FORWARD:
                 // Turn off reverse gates
                 set_gate(RIGHT_WHEEL_TOP_RIGHT, 0);
                 set_gate(RIGHT_WHEEL_BOTTOM_LEFT, 0);
@@ -102,14 +107,23 @@ void right_wheel_set(direction_t dir) {
                 set_gate(RIGHT_WHEEL_TOP_LEFT, 1);
                 set_gate(RIGHT_WHEEL_BOTTOM_RIGHT, 1);
                 break;
-            case Reverse:
+            case DIRECTION_REVERSE:
                 // Turn off forward gates
                 set_gate(RIGHT_WHEEL_TOP_LEFT, 0);
                 set_gate(RIGHT_WHEEL_BOTTOM_RIGHT, 0);
                 _delay_ms(500);
                 // Turn on reverse gates
                 set_gate(RIGHT_WHEEL_TOP_RIGHT, 1);
-                set_gate(RIGHT_WHEEL_BOTTOM_LEFT, 1);   
+                set_gate(RIGHT_WHEEL_BOTTOM_LEFT, 1);  
+                break;
+            case DIRECTION_NONE:
+                // Turn off reverse gates
+                set_gate(RIGHT_WHEEL_TOP_RIGHT, 0);
+                set_gate(RIGHT_WHEEL_BOTTOM_LEFT, 0);
+                // Turn off forward gates
+                set_gate(RIGHT_WHEEL_TOP_LEFT, 0);
+                set_gate(RIGHT_WHEEL_BOTTOM_RIGHT, 0);
+                break;
         }
 }
 
@@ -120,12 +134,12 @@ void rotate(spindirection_t dir, float radians){
 void rotate_indefinite(spindirection_t dir) {
     switch (dir) {
         case Clockwise:
-            left_wheel_set(Forward);
-            right_wheel_set(Reverse);
+            left_wheel_set(DIRECTION_FORWARD);
+            right_wheel_set(DIRECTION_REVERSE);
             break;
         case CounterClockwise:
-            left_wheel_set(Reverse);
-            right_wheel_set(Forward);
+            left_wheel_set(DIRECTION_REVERSE);
+            right_wheel_set(DIRECTION_FORWARD);
             break;
     }
 }

@@ -14,8 +14,9 @@
 
 
 typedef enum {
-    Forward,
-    Reverse
+    DIRECTION_FORWARD,
+    DIRECTION_REVERSE,
+    DIRECTION_NONE
 } direction_t;
 
 typedef enum {
@@ -60,13 +61,6 @@ typedef enum {
  * returns: returns 1 when an object is detected, and 0 otherwise.
  */
 int obstruction(int was_obstruction);
-
-/*
- * Function:  stop_car 
- * --------------------
- * disables all power to both motors.
- */
-void stop_car();
 
 /*
  * Function:  evade 
