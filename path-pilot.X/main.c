@@ -26,7 +26,6 @@ int main(void) {
 
     // Initialize USART
     configure();
-
     move(Forward);
     
     int obs_count = 0;
@@ -48,25 +47,17 @@ int main(void) {
 }
 
 void configure_pins() {
+    const size_t num_pins = sizeof(pins) / sizeof(pins[0]);
     
-    // Configure input pins
-    PORTA.DIRCLR = (1 << SONAR_ECHO_A_IN_PIN);
-    
-    // Configure output pins
-    PORTA.DIRSET = (1 << SONAR_TRIG_A_OUT_PIN) |
-        (1 << L_FOR_HI_A_OUT_PIN) | 
-        (1 << L_REV_HI_A_OUT_PIN) | 
-        (1 << R_FOR_HI_A_OUT_PIN) | 
-        (1 << RESERVED_A_PIN) |
-        (1 << L_FOR_LO_A_OUT_PIN) |
-        (1 << L_REV_LO_A_OUT_PIN);
-    
-    PORTC.DIRSET = (1 << R_REV_HI_C_OUT_PIN);
-    
-    PORTD.DIRSET = (1 << R_FOR_LO_D_OUT_PIN) |
-        (1 << R_REV_LO_D_OUT_PIN) |
-        (1 << LED_RED_D_OUT_PIN) |
-        (1 << BUZZER_D_OUT_PIN);
+    for (size_t i = 0; i < num_pins; ++i) {
+        if (pins[i].direction == PIN_DIRECTION_OUT) {
+            // Set pin as output
+            *(pins[i].port).OUT |= pins[i].pin;
+        } else {
+            // Set pin as input
+            *(pins[i].port).IN |= pins[i].pin;
+        }
+    }
 }
 
 void configure() {

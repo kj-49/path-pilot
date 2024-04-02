@@ -8,6 +8,9 @@
 #ifndef AVR_COMMON_H
 #define	AVR_COMMON_H
 
+#include <avr/io.h>
+#include <avr/ioavr128db28.h>
+
 /* 
  * This code to reliant on an H-Bridge circuit to control the direction of a our dc motors.
              VCC
@@ -96,6 +99,42 @@ Transistor 2            Transistor 3
 #define DEBUGGING 1
 #define PWM_FREQ 2000
 
+// Enum to represent pin direction
+typedef enum {
+    PIN_DIRECTION_IN,
+    PIN_DIRECTION_OUT
+} pin_direction_t;
+
+// Define the Pin structure
+typedef struct {
+    volatile PORT_t *port;
+    uint8_t pin;
+    pin_direction_t direction; // Indicates whether the pin is an input or output
+} pin_t;
+
+// Define constant pins for A port
+const pin_t SONAR_TRIG = {&PORTA, SONAR_TRIG_A_OUT_PIN, PIN_DIRECTION_OUT};
+const pin_t SONAR_ECHO = {&PORTA, SONAR_ECHO_A_IN_PIN, PIN_DIRECTION_IN};
+const pin_t L_FOR_HI = {&PORTA, L_FOR_HI_A_OUT_PIN, PIN_DIRECTION_OUT};
+const pin_t L_REV_HI = {&PORTA, L_REV_HI_A_OUT_PIN, PIN_DIRECTION_OUT};
+const pin_t R_FOR_HI = {&PORTA, R_FOR_HI_A_OUT_PIN, PIN_DIRECTION_OUT};
+const pin_t RESERVED_A = {&PORTA, RESERVED_A_PIN, PIN_DIRECTION_OUT};
+const pin_t L_FOR_LO = {&PORTA, L_FOR_LO_A_OUT_PIN, PIN_DIRECTION_OUT};
+const pin_t L_REV_LO = {&PORTA, L_REV_LO_A_OUT_PIN, PIN_DIRECTION_OUT};
+
+// Define constant pins for C port
+const pin_t R_REV_HI = {&PORTC, R_REV_HI_C_OUT_PIN, PIN_DIRECTION_OUT};
+
+// Define constant pins for D port
+const pin_t R_FOR_LO = {&PORTD, R_FOR_LO_D_OUT_PIN, PIN_DIRECTION_OUT};
+const pin_t R_REV_LO = {&PORTD, R_REV_LO_D_OUT_PIN, PIN_DIRECTION_OUT};
+const pin_t LED_RED = {&PORTD, LED_RED_D_OUT_PIN, PIN_DIRECTION_OUT};
+const pin_t BUZZER = {&PORTD, BUZZER_D_OUT_PIN, PIN_DIRECTION_OUT};
+const pin_t USART = {&PORTD, USART_D_IN_PIN, PIN_DIRECTION_IN};
+
+#define DEBUGGING 1
+#define PWM_FREQ 2000
+
 typedef enum {
     A,
     D
@@ -106,25 +145,25 @@ typedef enum {
  * --------------------
  * changes state of a single pin to value
  * 
- * pin: 8-bit binary int with the pin to change set to 1, and all others set to 0
- * port: the port the pin belongs to
+ * pin: the pin
  * value: the value to change single pin, (1 or 0)
  * 
  */
-void set_pin_output_value(int pin, port_t port, int value);
+void set_pin_output_value(pin_t pin, int value);
 
 /*
  * Function:  compare_pin_input_value 
  * --------------------
  * checks if the state of the pin matches value
  * 
- * pin: 8-bit binary int with the pin to change set to 1, and all others set to 0
- * port: the port the pin belongs to
+ * pin: the pin
  * value: the value we want to compare to pin value.
  * 
- * returns: returns -1 if an error has occurred, 1 if the pin state is the same as value, 0 otherwise.
+ * returns: 1 if the pin state is the same as value, 0 otherwise.
  */
-int compare_pin_input_value(int pin, port_t port, int value);
+int compare_pin_input_value(pin_t pin, int value);
+
+*pins
 
 
 

@@ -35,20 +35,20 @@ float get_distance() {
     TCA0.SINGLE.PER = 0xffff;
     
     // send pulse
-    set_pin_output_value(SONAR_TRIG_A_OUT_PIN, A, 1);
+    set_pin_output_value(SONAR_TRIG, 1);
     // delay
     _delay_us(10);
     
     // end pulse
-    set_pin_output_value(SONAR_TRIG_A_OUT_PIN, A, 0);
+    set_pin_output_value(SONAR_TRIG, 0);
     // wait for echo
-    while(compare_pin_input_value(SONAR_ECHO_A_IN_PIN, A, 0)) {
+    while(compare_pin_input_value(SONAR_ECHO, 0)) {
         ;
     }
     // start timer
     TCA0.SINGLE.CTRLA = 0b000000001;
     // wait for signal to end
-    while(compare_pin_input_value(SONAR_ECHO_A_IN_PIN, A, 1));
+    while(compare_pin_input_value(SONAR_TRIG, 1));
     // capture timer count (clock cycles = microseconds)
     volatile uint16_t micros = TCA0.SINGLE.CNT;
     
