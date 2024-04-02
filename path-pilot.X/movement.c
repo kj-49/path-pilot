@@ -203,29 +203,34 @@ void TCB2_init_pwm(int perc_duty_cycle){
 void TCD0_init_pwm(int perc_duty_cycle){
     TCD0.CTRLB |= 0x00; // Use one ramp mode
 
-    // Period
-    uint8_t wave_per = F_CPU / (2 * PWM_FREQ) - 1;;
-    
-    uint8_t pulse_width = (uint8_t)((uint16_t)perc_duty_cycle * wave_per / 100);
+    /*
+     * A 12-bit timer has 4096 ticks.
+     */
+    uint8_t duty_in_ticks = perc_duty_cycle * 4096;
     
     TCD0.CMPASET = 0x00;
-    TCD0.CMPACLR = pulse_width;
+    TCD0.CMPACLR = duty_in_ticks;
        
     TCD0.CMPBSET = 0x00;
-    TCD0.CMPBCLR = wave_per;
+    TCD0.CMPBCLR = duty_in_ticks;
     
-    TCD0.FAULTCTRL = (1 << 4) | // CMPA Enable
-            (1 << 1) | // CMPA Value
+    _PROTECTED_WRITE(
+            TCD0.FAULTCTRL, 
+            (1 << 4) | // CMPA Enable
+            (1 << 0) | // CMPA Value
             (1 << 5) | // CMPB Enable
-            (1 << 2); // CMPB Value
+            (1 << 1) // CMPB Value
+        );
     
     // Wait for TCD to be ready
-    while (!(TCD0.STATUS & (1 << 1))) {
+    while (!(TCD0.STATUS & (1 << 0))) {
         ;
     }
     
     // Set OSCHF as input clock
     TCD0.CTRLA &= ~((1 << 5) | (1 << 6));
+    
+    // We will enable inside set_TCD0 function
 }
 
 void set_TCB0(int state) {
