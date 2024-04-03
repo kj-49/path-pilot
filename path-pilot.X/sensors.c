@@ -22,7 +22,7 @@ float get_distance() {
      * Therefore, our TCA0.SINGLE.CNT value with be the amount of clock cycles
      * for a clock set to 1MHz. For example, TCA0.SINGLE.CNT should be 1 million after 1 second.
      * 
-     * IMPORTANT: We should make sure our division is gives us enough time to execute our timer. If our timer goes past
+     * IMPORTANT: We should make sure our division gives us enough time to execute our timer. If our timer goes past
      * TCA0.SINGLE.PER it will reset to 0x00.
      * 
      * Given our current parameters, we can effectively use the timer for timing from 0 seconds to 0.065535 seconds.
