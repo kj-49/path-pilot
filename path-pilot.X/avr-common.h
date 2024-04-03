@@ -51,7 +51,7 @@ Transistor 2            Transistor 3
   | PD3 BUZZER                 |
   | PD4                        |
   | PD5 HEADLIGHTS             |
-  | PD6 PHOTOIN                |
+  | PD6                        |
   | PD7                        |
   |                            |
   | GND                        |
