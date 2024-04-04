@@ -174,7 +174,7 @@ void TCB2_init_pwm(int perc_duty_cycle){
     // Set output pins MUX
     PORTMUX.TCBROUTEA &= ~(1 << 2); // TCB1 PWM on PA3
     
-    TCB0_set_duty_cycle(perc_duty_cycle);
+    TCB2_set_duty_cycle(perc_duty_cycle);
     
     TCB2.CTRLA = (0 << 0); // Disable for now timer, use DIV1 for CLK 
 

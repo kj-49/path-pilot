@@ -27,7 +27,7 @@ int main(void) {
     // Initialize USART
     configure();
 
-    move(DIRECTION_FORWARD);
+    move(DIRECTION_REVERSE);
     
     int obs_count = 0;
     int was_obstruction = 0;
