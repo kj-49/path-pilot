@@ -149,15 +149,9 @@ void TCB0_init_pwm(int perc_duty_cycle) {
     // Set output pins MUX
     PORTMUX.TCBROUTEA &= ~(1 << 0); // TCB0 PWM on PA2
     
-    // Period
-    uint8_t wave_per = F_CPU / (2 * PWM_FREQ) - 1;;
+    TCB0_set_duty_cycle(perc_duty_cycle);
     
-    uint8_t pulse_width = (uint8_t)((uint16_t)perc_duty_cycle * wave_per / 100);
-
     TCB0.CTRLA = (0 << 0); // Disable for now timer, use DIV1 for CLK 
-
-    TCB0.CCMPL = wave_per;
-    TCB0.CCMPH = pulse_width;
 
     TCB0.CTRLB = (1 << 4) | // Make output available on MUXed pin
                 (0x7); // Use 8-bit PWM modee
@@ -168,15 +162,9 @@ void TCB1_init_pwm(int perc_duty_cycle){
     // Set output pins MUX
     PORTMUX.TCBROUTEA &= ~(1 << 1); // TCB1 PWM on PA3
     
-    // Period
-    uint8_t wave_per = F_CPU / (2 * PWM_FREQ) - 1;;
-    
-    uint8_t pulse_width = (uint8_t)((uint16_t)perc_duty_cycle * wave_per / 100);
-    
-    TCB1.CTRLA = (0 << 0); // Disable for now timer, use DIV1 for CLK 
+    TCB1_set_duty_cycle(perc_duty_cycle);
 
-    TCB1.CCMPL = wave_per;
-    TCB1.CCMPH = pulse_width;
+    TCB1.CTRLA = (0 << 0); // Disable for now timer, use DIV1 for CLK 
 
     TCB1.CTRLB = (1 << 4) | // Make output available on MUXed pin
                 (0x7); // Use 8-bit PWM mode
@@ -186,15 +174,9 @@ void TCB2_init_pwm(int perc_duty_cycle){
     // Set output pins MUX
     PORTMUX.TCBROUTEA &= ~(1 << 2); // TCB1 PWM on PA3
     
-    // Period
-    uint8_t wave_per = F_CPU / (2 * PWM_FREQ) - 1;;
-    
-    uint8_t pulse_width = (uint8_t)((uint16_t)perc_duty_cycle * wave_per / 100);
+    TCB0_set_duty_cycle(perc_duty_cycle);
     
     TCB2.CTRLA = (0 << 0); // Disable for now timer, use DIV1 for CLK 
-
-    TCB2.CCMPL = wave_per;
-    TCB2.CCMPH = pulse_width;
 
     TCB2.CTRLB = (1 << 4) | // Make output available on MUXed pin
                 (0x7); // Use 8-bit PWM mode
@@ -203,22 +185,7 @@ void TCB2_init_pwm(int perc_duty_cycle){
 void TCD0_init_pwm(int perc_duty_cycle){
     TCD0.CTRLB = 0x00; // Use one ramp mode
 
-    /*
-     * A 12-bit timer has 4096 ticks.
-     */
-       // Period
-    uint8_t wave_per = F_CPU / (2 * PWM_FREQ) - 1;;
-    
-    uint8_t pulse_width = (uint8_t)((uint16_t)perc_duty_cycle * wave_per / 100);
-    
-    int period = 4095;
-    volatile int duty_in_ticks = ((float)perc_duty_cycle / 100) * period;
-    
-    TCD0.CMPASET = 0x00;
-    TCD0.CMPACLR = pulse_width;
-       
-    TCD0.CMPBSET = 0x00;
-    TCD0.CMPBCLR = wave_per;
+    TCD0_set_duty_cycle(perc_duty_cycle);
     
     _PROTECTED_WRITE(
             TCD0.FAULTCTRL, 
@@ -299,4 +266,38 @@ void set_gate(h_bridge_gate_t gate, int value) {
             set_pin_output_value(R_FOR_LO_D_OUT_PIN, D, value);
             break;
     }
+}
+
+void TCB0_set_duty_cycle(int perc_duty_cycle) {
+    // Period
+    uint8_t wave_per = F_CPU / (2 * PWM_FREQ) - 1;;
+    uint8_t pulse_width = (uint8_t)((uint16_t)perc_duty_cycle * wave_per / 100);
+    
+    TCB0.CCMPL = wave_per;
+    TCB0.CCMPH = pulse_width;
+}
+void TCB1_set_duty_cycle(int perc_duty_cycle) {
+    // Period
+    uint8_t wave_per = F_CPU / (2 * PWM_FREQ) - 1;;
+    uint8_t pulse_width = (uint8_t)((uint16_t)perc_duty_cycle * wave_per / 100);
+    TCB1.CCMPL = wave_per;
+    TCB1.CCMPH = pulse_width;
+}
+void TCB2_set_duty_cycle(int perc_duty_cycle) {
+    // Period
+    uint8_t wave_per = F_CPU / (2 * PWM_FREQ) - 1;;
+    uint8_t pulse_width = (uint8_t)((uint16_t)perc_duty_cycle * wave_per / 100);
+    TCB2.CCMPL = wave_per;
+    TCB2.CCMPH = pulse_width;
+}
+void TCD0_set_duty_cycle(int perc_duty_cycle) {
+    // Period
+    uint8_t wave_per = F_CPU / (2 * PWM_FREQ) - 1;;
+    uint8_t pulse_width = (uint8_t)((uint16_t)perc_duty_cycle * wave_per / 100);
+    
+    TCD0.CMPASET = 0x00;
+    TCD0.CMPACLR = pulse_width;  
+    
+    TCD0.CMPBSET = 0x00;
+    TCD0.CMPBCLR = wave_per;
 }

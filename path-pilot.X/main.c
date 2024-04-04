@@ -16,7 +16,7 @@
 #include <avr/delay.h>
 
 #define OPERATING_DUTY_CYCLE 99
-#define DEBOUNCE_COUNT 20
+#define DEBOUNCE_COUNT 5
 // Prototypes
 void configure_pins();
 void configure();
@@ -29,7 +29,6 @@ int main(void) {
 
     move(DIRECTION_FORWARD);
     
-    /*
     int obs_count = 0;
     int was_obstruction = 0;
     while (1) {
@@ -45,7 +44,6 @@ int main(void) {
             obs_count = 0;
         }
     }
-    */
     
 }
 

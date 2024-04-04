@@ -151,5 +151,10 @@ void TCB2_init_pwm(int perc_duty_cycle);
  */
 void TCD0_init_pwm(int perc_duty_cycle);
 
+void TCB0_set_duty_cycle(int perc_duty_cycle);
+void TCB1_set_duty_cycle(int perc_duty_cycle);
+void TCB2_set_duty_cycle(int perc_duty_cycle);
+void TCD0_set_duty_cycle(int perc_duty_cycle);
+
 #endif	/* MOVEMENT_H */
 
