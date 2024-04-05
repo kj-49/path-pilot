@@ -22,12 +22,20 @@
 
 void left_wheel_set(direction_t dir);
 void right_wheel_set(direction_t dir);
+void TCB0_init_pwm(int perc_duty_cycle);
+void TCB1_init_pwm(int perc_duty_cycle);
+void TCB2_init_pwm(int perc_duty_cycle);
+void TCD0_init_pwm(int perc_duty_cycle);
 void set_TCB0(int state);
 void set_TCB1(int state);
 void set_TCB2(int state);
 void set_TCD0(int state);
 void set_gate(h_bridge_gate_t gate, int value);
 void reverse_plus_buzzer(int ms);
+
+/*
+ * Start Public Functions
+ */
 
 int obstruction(int was_obstruction) {
     float dist = get_distance();
@@ -72,23 +80,20 @@ void move(direction_t dir) {
     right_wheel_set(dir);
 }
 
-void reverse_plus_buzzer(int ms) {
-    // Move
-    move(DIRECTION_REVERSE);
-    
-    int i;
-    for (i = 0; i < ms; i++) {
-        if (i % BUZZER_INTERVAL_MS == 0) { // Play every BUZZER_INTERVAL_MS seconds
-            set_buzzer(1);
-            _delay_ms(BUZZER_DURATION_MS);
-            set_buzzer(0);
-            i += BUZZER_DURATION_MS; // Skip some iterations since BUZZER_DURATION_MS already passed
-        }
-        _delay_ms(1);
+void rotate_indefinite(spindirection_t dir) {
+    switch (dir) {
+        case Clockwise:
+            left_wheel_set(DIRECTION_FORWARD);
+            right_wheel_set(DIRECTION_REVERSE);
+            break;
+        case CounterClockwise:
+            left_wheel_set(DIRECTION_REVERSE);
+            right_wheel_set(DIRECTION_FORWARD);
+            break;
     }
-    
-    move(DIRECTION_NONE);
 }
+
+
 
 
 void left_wheel_set(direction_t dir) {
@@ -123,51 +128,67 @@ void left_wheel_set(direction_t dir) {
 }
 
 void right_wheel_set(direction_t dir) {
-        switch (dir) {
-            case DIRECTION_FORWARD:
-                // Turn off reverse gates
-                set_gate(RIGHT_WHEEL_TOP_RIGHT, 0);
-                set_gate(RIGHT_WHEEL_BOTTOM_LEFT, 0);
-                //_delay_ms(500);
-                // Turn on forward gates
-                set_gate(RIGHT_WHEEL_TOP_LEFT, 1);
-                set_gate(RIGHT_WHEEL_BOTTOM_RIGHT, 1);
-                break;
-            case DIRECTION_REVERSE:
-                // Turn off forward gates
-                set_gate(RIGHT_WHEEL_TOP_LEFT, 0);
-                set_gate(RIGHT_WHEEL_BOTTOM_RIGHT, 0);
-                //_delay_ms(500);
-                // Turn on reverse gates
-                set_gate(RIGHT_WHEEL_TOP_RIGHT, 1);
-                set_gate(RIGHT_WHEEL_BOTTOM_LEFT, 1);  
-                break;
-            case DIRECTION_NONE:
-                // Turn off reverse gates
-                set_gate(RIGHT_WHEEL_TOP_RIGHT, 0);
-                set_gate(RIGHT_WHEEL_BOTTOM_LEFT, 0);
-                // Turn off forward gates
-                set_gate(RIGHT_WHEEL_TOP_LEFT, 0);
-                set_gate(RIGHT_WHEEL_BOTTOM_RIGHT, 0);
-                break;
-        }
-}
-
-void rotate(spindirection_t dir, float radians){
-    
-}
-
-void rotate_indefinite(spindirection_t dir) {
     switch (dir) {
-        case Clockwise:
-            left_wheel_set(DIRECTION_FORWARD);
-            right_wheel_set(DIRECTION_REVERSE);
+        case DIRECTION_FORWARD:
+            // Turn off reverse gates
+            set_gate(RIGHT_WHEEL_TOP_RIGHT, 0);
+            set_gate(RIGHT_WHEEL_BOTTOM_LEFT, 0);
+            //_delay_ms(500);
+            // Turn on forward gates
+            set_gate(RIGHT_WHEEL_TOP_LEFT, 1);
+            set_gate(RIGHT_WHEEL_BOTTOM_RIGHT, 1);
             break;
-        case CounterClockwise:
-            left_wheel_set(DIRECTION_REVERSE);
-            right_wheel_set(DIRECTION_FORWARD);
+        case DIRECTION_REVERSE:
+            // Turn off forward gates
+            set_gate(RIGHT_WHEEL_TOP_LEFT, 0);
+            set_gate(RIGHT_WHEEL_BOTTOM_RIGHT, 0);
+            //_delay_ms(500);
+            // Turn on reverse gates
+            set_gate(RIGHT_WHEEL_TOP_RIGHT, 1);
+            set_gate(RIGHT_WHEEL_BOTTOM_LEFT, 1);  
+            break;
+        case DIRECTION_NONE:
+            // Turn off reverse gates
+            set_gate(RIGHT_WHEEL_TOP_RIGHT, 0);
+            set_gate(RIGHT_WHEEL_BOTTOM_LEFT, 0);
+            // Turn off forward gates
+            set_gate(RIGHT_WHEEL_TOP_LEFT, 0);
+            set_gate(RIGHT_WHEEL_BOTTOM_RIGHT, 0);
             break;
     }
+}
+
+void left_wheel_init_pwm(int perc_duty_cycle) {
+    TCB0_init_pwm(perc_duty_cycle);
+    TCB1_init_pwm(perc_duty_cycle);
+}
+
+void right_wheel_init_pwm(int perc_duty_cycle) {
+    TCB2_init_pwm(perc_duty_cycle);
+    TCD0_init_pwm(perc_duty_cycle);
+}
+
+
+/*
+ * End Public Functions
+ */
+
+void reverse_plus_buzzer(int ms) {
+    // Move
+    move(DIRECTION_REVERSE);
+    
+    int i;
+    for (i = 0; i < ms; i++) {
+        if (i % BUZZER_INTERVAL_MS == 0) { // Play every BUZZER_INTERVAL_MS seconds
+            set_buzzer(1);
+            _delay_ms(BUZZER_DURATION_MS);
+            set_buzzer(0);
+            i += BUZZER_DURATION_MS; // Skip some iterations since BUZZER_DURATION_MS already passed
+        }
+        _delay_ms(1);
+    }
+    
+    move(DIRECTION_NONE);
 }
 
 void TCB0_init_pwm(int perc_duty_cycle) {
@@ -180,7 +201,7 @@ void TCB0_init_pwm(int perc_duty_cycle) {
     TCB0.CTRLA = (0 << 0); // Disable for now timer, use DIV1 for CLK 
 
     TCB0.CTRLB = (1 << 4) | // Make output available on MUXed pin
-                (0x7); // Use 8-bit PWM modee
+                (0x7); // Use 8-bit PWM mode
 
 }
 
@@ -193,7 +214,7 @@ void TCB1_init_pwm(int perc_duty_cycle){
     TCB1.CTRLA = (0 << 0); // Disable for now timer, use DIV1 for CLK 
 
     TCB1.CTRLB = (1 << 4) | // Make output available on MUXed pin
-                (0x7); // Use 8-bit PWM mode
+        (0x7); // Use 8-bit PWM mode
 }
 
 void TCB2_init_pwm(int perc_duty_cycle){
@@ -205,7 +226,7 @@ void TCB2_init_pwm(int perc_duty_cycle){
     TCB2.CTRLA = (0 << 0); // Disable for now timer, use DIV1 for CLK 
 
     TCB2.CTRLB = (1 << 4) | // Make output available on MUXed pin
-                (0x7); // Use 8-bit PWM mode
+        (0x7); // Use 8-bit PWM mode
 }
 
 void TCD0_init_pwm(int perc_duty_cycle){
@@ -326,4 +347,14 @@ void TCD0_set_duty_cycle(int perc_duty_cycle) {
     
     TCD0.CMPBSET = 0x00;
     TCD0.CMPBCLR = wave_per;
+}
+
+void turn(side_t side) {
+    switch (side) {
+        case SIDE_RIGHT:
+            
+            break;
+        case SIDE_LEFT:
+            break;
+    }
 }

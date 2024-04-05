@@ -26,8 +26,8 @@ typedef enum {
 } status_t;
 
 typedef enum {
-    Left,
-    Right
+    SIDE_LEFT,
+    SIDE_RIGHT
 } side_t;
 
 typedef enum {
@@ -80,16 +80,6 @@ void evade(int was_obstruction);
 void move(direction_t dir);
 
 /*
- * Function:  rotate 
- * --------------------
- * rotate vehicle in direction dir by degrees radians.
- * 
- * dir: direction to rotate
- * radians: degrees to rotate
- */
-void rotate(spindirection_t dir, float radians);
-
-/*
  * Function:  rotate_indefinite 
  * --------------------
  * rotate vehicle indefinitely.
@@ -98,44 +88,30 @@ void rotate(spindirection_t dir, float radians);
  */
 void rotate_indefinite(spindirection_t dir);
 
-/*
- * Function:  indicate_status 
- * --------------------
- * sets led light to color linked to status
- * 
- * status: status of car
- */
-void indicate_status(status_t status);
 
 /*
- * Function:  TCB0_init_pwm 
+ * Function:  left_wheel_init_pwm 
  * --------------------
- * Configures pww for TCB0, but does not enable waveform.
+ * Configures pww for left wheel, but does not enable waveform.
  * 
  * perc_duty_cycle: percentage duty cycle
  * 
  */
-void TCB0_init_pwm(int perc_duty_cycle);
+void left_wheel_init_pwm(int perc_duty_cycle);
 
 /*
- * Function:  TCB1_init_pwm 
+ * Function:  right_wheel_init_pwm 
  * --------------------
- * Configures pww for TCB1, but does not enable waveform.
+ * Configures pww for right wheel, but does not enable waveform.
  * 
  * perc_duty_cycle: percentage duty cycle
  * 
  */
-void TCB1_init_pwm(int perc_duty_cycle);
 
-/*
- * Function:  TCB1_init_pwm 
- * --------------------
- * Configures pww for TCB2, but does not enable waveform.
- * 
- * perc_duty_cycle: percentage duty cycle
- * 
- */
-void TCB2_init_pwm(int perc_duty_cycle);
+void TCB0_set_duty_cycle(int perc_duty_cycle);
+void TCB1_set_duty_cycle(int perc_duty_cycle);
+void TCB2_set_duty_cycle(int perc_duty_cycle);
+void TCD0_set_duty_cycle(int perc_duty_cycle);
 
 /*
  * Function:  TCD0_init_pwm 
@@ -145,12 +121,7 @@ void TCB2_init_pwm(int perc_duty_cycle);
  * perc_duty_cycle: percentage duty cycle
  * 
  */
-void TCD0_init_pwm(int perc_duty_cycle);
-
-void TCB0_set_duty_cycle(int perc_duty_cycle);
-void TCB1_set_duty_cycle(int perc_duty_cycle);
-void TCB2_set_duty_cycle(int perc_duty_cycle);
-void TCD0_set_duty_cycle(int perc_duty_cycle);
+void turn(side_t side);
 
 #endif	/* MOVEMENT_H */
 
