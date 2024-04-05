@@ -27,8 +27,9 @@ int main(void) {
     // Initialize USART
     configure();
 
-    move(DIRECTION_REVERSE);
+    move(DIRECTION_FORWARD);
     
+    /*
     int obs_count = 0;
     int was_obstruction = 0;
     while (1) {
@@ -44,6 +45,7 @@ int main(void) {
             obs_count = 0;
         }
     }
+    */
 }
 
 void configure_pins() {
