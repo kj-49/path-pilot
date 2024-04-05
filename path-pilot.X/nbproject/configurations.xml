@@ -26,6 +26,8 @@
       <itemPath>sensors.c</itemPath>
       <itemPath>communication.c</itemPath>
       <itemPath>communication.h</itemPath>
+      <itemPath>audio.h</itemPath>
+      <itemPath>audio.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
@@ -1256,6 +1258,8 @@
                   value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-ffff"/>
+        <property key="programmerToGoFilePath"
+                  value="D:/New folder (2)/UofC/Year 2/ENEL 300/path-pilot/path-pilot.X/debug/default/path-pilot_ptg"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.pgmentry.voltage" value="low"/>

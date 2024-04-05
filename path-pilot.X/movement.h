@@ -9,10 +9,6 @@
 
 #include <stdint.h>
 
-
-
-
-
 typedef enum {
     DIRECTION_FORWARD,
     DIRECTION_REVERSE,

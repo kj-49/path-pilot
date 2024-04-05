@@ -95,6 +95,7 @@ Transistor 2            Transistor 3
 
 #define DEBUGGING 1
 #define PWM_FREQ 2000
+#define OPERATING_DUTY_CYCLE 50
 
 typedef enum {
     A,

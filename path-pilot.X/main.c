@@ -15,7 +15,7 @@
 #include <avr/interrupt.h>
 #include <avr/delay.h>
 
-#define OPERATING_DUTY_CYCLE 99
+
 #define DEBOUNCE_COUNT 5
 // Prototypes
 void configure_pins();
@@ -44,7 +44,6 @@ int main(void) {
             obs_count = 0;
         }
     }
-    
 }
 
 void configure_pins() {
@@ -86,9 +85,9 @@ void configure() {
     }
     
     // Initialize PWM
-    TCB0_init_pwm(50);
-    TCB1_init_pwm(50);
-    TCB2_init_pwm(50);
-    TCD0_init_pwm(50);
+    TCB0_init_pwm(OPERATING_DUTY_CYCLE);
+    TCB1_init_pwm(OPERATING_DUTY_CYCLE);
+    TCB2_init_pwm(OPERATING_DUTY_CYCLE);
+    TCD0_init_pwm(OPERATING_DUTY_CYCLE);
 
 }

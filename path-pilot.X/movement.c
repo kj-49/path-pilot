@@ -10,11 +10,15 @@
 #include "avr-common.h"
 #include "sensors.h"
 #include "communication.h"
+#include "audio.h"
 #include <avr/io.h>
 
 // When to count obstruction in cm.
 #define STOP_THRESHOLD 15 // Stop if below 10
 #define GO_THRESHOLD 20 // Go if above 12
+#define BUZZER_INTERVAL_MS 500
+#define BUZZER_DURATION_MS 100
+#define REVERSE_DURATION_MS 2000
 
 void left_wheel_set(direction_t dir);
 void right_wheel_set(direction_t dir);
@@ -23,6 +27,7 @@ void set_TCB1(int state);
 void set_TCB2(int state);
 void set_TCD0(int state);
 void set_gate(h_bridge_gate_t gate, int value);
+void reverse_plus_buzzer(int ms);
 
 int obstruction(int was_obstruction) {
     float dist = get_distance();
@@ -43,6 +48,9 @@ int obstruction(int was_obstruction) {
 
 void evade(int was_obstruction) {
     move(DIRECTION_NONE);
+    
+    reverse_plus_buzzer(REVERSE_DURATION_MS);
+    
     rotate_indefinite(CounterClockwise);
     
     int safe_count = 0;
@@ -56,7 +64,6 @@ void evade(int was_obstruction) {
         }
     }
     move(DIRECTION_NONE);
-    
     move(DIRECTION_FORWARD);
 }
 
@@ -64,6 +71,25 @@ void move(direction_t dir) {
     left_wheel_set(dir);
     right_wheel_set(dir);
 }
+
+void reverse_plus_buzzer(int ms) {
+    // Move
+    move(DIRECTION_REVERSE);
+    
+    int i;
+    for (i = 0; i < ms; i++) {
+        if (i % BUZZER_INTERVAL_MS == 0) { // Play every BUZZER_INTERVAL_MS seconds
+            set_buzzer(1);
+            _delay_ms(BUZZER_DURATION_MS);
+            set_buzzer(0);
+            i += BUZZER_DURATION_MS; // Skip some iterations since BUZZER_DURATION_MS already passed
+        }
+        _delay_ms(1);
+    }
+    
+    move(DIRECTION_NONE);
+}
+
 
 void left_wheel_set(direction_t dir) {
     switch (dir) {
