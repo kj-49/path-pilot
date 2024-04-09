@@ -15,10 +15,10 @@
 
 // When to count obstruction in cm.
 #define STOP_THRESHOLD 15 // Stop if below 10
-#define GO_THRESHOLD 20 // Go if above 12
-#define BUZZER_INTERVAL_MS 500
+#define GO_THRESHOLD 45 // Go if above 20
+#define BUZZER_INTERVAL_MS 100
 #define BUZZER_DURATION_MS 100
-#define REVERSE_DURATION_MS 2000
+#define REVERSE_DURATION_MS 500
 
 void left_wheel_set(direction_t dir);
 void right_wheel_set(direction_t dir);
