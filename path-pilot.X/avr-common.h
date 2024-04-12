@@ -48,8 +48,8 @@ Transistor 2            Transistor 3
   | GND                        |
   | PD1 R FORWARD LOW GATE     |
   | PD2 R REVERSE LOW GATE     |
-  | PD3 BUZZER                 |
-  | PD4                        |
+  | PD3                        |
+  | PD4 BUZZER                 |
   | PD5 HEADLIGHTS             |
   | PD6                        |
   | PD7                        |
