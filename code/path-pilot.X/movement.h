@@ -1,9 +1,4 @@
-/* 
- * File:   movement.h
- * Author: ksj
- *
- * Created on January 21, 2024, 9:43 AM
- */
+
 #ifndef MOVEMENT_H
 #define	MOVEMENT_H
 

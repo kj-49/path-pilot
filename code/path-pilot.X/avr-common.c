@@ -1,9 +1,3 @@
-/* 
- * File:   movement.h
- * Author: Kyle James
- *
- * Created on January 24, 2024, 9:43 AM
- */
 
 #include "avr-common.h"
 #include <avr/io.h>

@@ -1,10 +1,3 @@
-/*
- * File:   movement.c
- * Author: Kyle James
- *
- * Created on January 21, 2024, 12:13 AM
- */
-
 
 #include "movement.h"
 #include "avr-common.h"
@@ -32,10 +25,6 @@ void set_TCB2(int state);
 void set_TCD0(int state);
 void set_gate(h_bridge_gate_t gate, int value);
 void reverse_plus_buzzer(int ms);
-
-/*
- * Start Public Functions
- */
 
 int obstruction(int was_obstruction) {
     float dist = get_distance();
@@ -167,11 +156,6 @@ void right_wheel_init_pwm(int perc_duty_cycle) {
     TCB2_init_pwm(perc_duty_cycle);
     TCD0_init_pwm(perc_duty_cycle);
 }
-
-
-/*
- * End Public Functions
- */
 
 void reverse_plus_buzzer(int ms) {
     // Move

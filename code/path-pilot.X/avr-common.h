@@ -1,9 +1,3 @@
-/* 
- * File:   avr-common.h
- * Author: Kyle James
- *
- * Created on January 24, 2024, 12:09 PM
- */
 
 #ifndef AVR_COMMON_H
 #define	AVR_COMMON_H

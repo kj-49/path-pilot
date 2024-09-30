@@ -1,11 +1,4 @@
 
-/*
- * File:   sensors.c
- * Author: Kyle James
- *
- * Created on January 24, 2024, 12:13 AM
- */
-
 #include "sensors.h"
 #include "avr-common.h"
 #include <util/delay.h>

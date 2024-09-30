@@ -1,9 +1,3 @@
-/* 
- * File:   communication.c
- * Author: Kyle James
- *
- * Created on February 4, 2024, 4:28 PM
- */
 
 #include <avr/io.h>
 #include <string.h>

@@ -1,10 +1,3 @@
-/*
- * File:   main.c
- * Author: Kyle James
- *
- * Created on February 2, 2024, 4:07 PM
- */
-
 
 #include "movement.h"
 #include "sensors.h"
@@ -17,14 +10,13 @@
 
 
 #define DEBOUNCE_COUNT 5
-// Prototypes
+
 void configure_pins();
 void configure();
 void boot_car();
 
 int main(void) { 
 
-    // Initialize USART
     configure();
 
     move(DIRECTION_FORWARD);

@@ -1,9 +1,4 @@
-/* 
- * File:   communication.h
- * Author: Kyle James
- *
- * Created on February 4, 2024, 4:34 PM
- */
+
 
 #ifndef COMMUNICATION_H
 #define	COMMUNICATION_H
