@@ -1,9 +1,9 @@
 ## Path Pilot
 
-Path Pilot is a self-navigating robot built running on an [AVR128DB28](https://www.microchip.com/en-us/product/avr128db28) microcontroller and built for a project during my 2nd of Electrical Engineering.
+__Path Pilot__ is a self-navigating robot built on an [AVR128DB28](https://www.microchip.com/en-us/product/avr128db28) microcontroller. It was developed as part of a project during my second year of Electrical Engineering.
 
 ## PCB
-As a bonus to our project, our group was given the opportunity to order a PCB for our circuit design. Given this was our first exposure to PCB designing and not a requirement to the project, it was neccessary for us to learn PCB design software on our own. [This](https://github.com/kj-49/path-pilot/tree/main/pcb/path-pilot-pcb) is what we came up with.
+As an additional aspect of our project, our group had the opportunity to design and order a PCB for our circuit. This was our first exposure to PCB design, and since it wasn't a requirement for the project, we had to learn how to use PCB design software independently. [Here](https://github.com/kj-49/path-pilot/tree/main/pcb/path-pilot-pcb) is what we came up with.
 
 #### Schematic
 ![Schematic](https://github.com/kj-49/path-pilot/blob/main/media/schematic.JPG)
